@@ -18,12 +18,6 @@ const bodyValidation = Joi.object({
   });
   
 
-  const updateFavoriteValidation = Joi.object({
-    favorite: Joi.boolean()
-      .required()
-      .messages({ "any.required": "missing field favorite" }),
-  });
-  
   const authValidation = Joi.object({
     email: Joi.string()
       .min(4)
@@ -38,7 +32,6 @@ const bodyValidation = Joi.object({
 
   module.exports = {
     bodyValidation,
-    updateFavoriteValidation,
     authValidation
   };
 

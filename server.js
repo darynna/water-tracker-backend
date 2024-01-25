@@ -18,8 +18,8 @@ mongoose.set("strictQuery", true);
 mongoose
   .connect(DB_URL)
   .then(() => {
-    app.listen(5000, () => {
-      console.log("Server running. Use our API on port: 5000");
+    app.listen(5001, () => {
+      console.log("Server running. Use our API on port: 5001");
       console.log("Database connection successful");
     });
   })

@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
+const { handleMongooseError } = require('../../utilities');
 
-const userSchema = new Schema(
+const UserSchema = new Schema(
     {
         password: {
           type: String,
@@ -11,19 +12,23 @@ const userSchema = new Schema(
           required: [true, 'Email is required'],
           unique: true,
         },
-        subscription: {
-          type: String,
-          enum: ["starter", "pro", "business"],
-          default: "starter"
-        },
         token: {
           type: String,
           default: null,
         },
+        avatarURL: String,
+        name: String,
+        gender: String,
+        dailyNorma: Number,
+      },
+      {
+        versionKey: false,
       }
-)
+);
 
-const User = model('user', userSchema)
+UserSchema.post("save", handleMongooseError);
+
+const User = model('user', UserSchema)
 
 module.exports = {
   User

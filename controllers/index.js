@@ -1,25 +1,19 @@
-const {getAllContacts,
-    getById,
-    deleteContact,
-    postContact,
-    updateContact} = require("./controllers")
 const {
     signup,
     login,
     getCurrent,
     logout,
-    updateSubscription
-} = require('./authControllers')   
+    getUserInfo,
+    changeUserinformation,
+    updateAvatar
+} = require('./userControllers')   
 
 module.exports = {
-    getAllContacts,
-  getById,
-  deleteContact,
-  postContact,
-  updateContact,
   signup,
   login,
   getCurrent,
   logout,
-  updateSubscription
+  getUserInfo,
+  changeUserinformation,
+  updateAvatar
   }

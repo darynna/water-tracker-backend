@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const { handleMongooseError } = require('../../utilities');
 
 const WaterSchema = new Schema(
   {
@@ -20,6 +21,7 @@ const WaterSchema = new Schema(
     versionKey: false,
   }
 );
+WaterSchema.post("save", handleMongooseError);
 
 const Water = model("water", WaterSchema);
 
