@@ -11,25 +11,25 @@ const bodyValidation = Joi.object({
     .messages({ "any.required": "missing required date field" }),
 });
 const dailyNormaValidation = Joi.object({
-  dailyNorma: Joi.number()
-    .min(1)
-    .max(15000)
+  // dailyNorma: Joi.number()
+  //   .min(1)
+  //   .max(15000)
+  //   .required()
+  //   .messages({ "any.required": "missing required dailyNorma field" }),
+  gender: Joi.string()
     .required()
-    .messages({ "any.required": "missing required dailyNorma field" }),
-  // gender: Joi.string()
-  //   .required()
-  //   .messages({ "any.required": "missing required gender field" }),
-  // weight: Joi.number()
-  //   .min(1)
-  //   .max(200)
-  //   .required()
-  //   .messages({ "any.required": "missing required weight field" }),
-  // time: Joi.number()
-  //   .min(1)
-  //   .max(24)
-  //   .required()
-  //   .messages({ "any.required": "missing required time field" }),
-  // yourAmountWater: Joi.number().min(1).max(15000),
+    .messages({ "any.required": "missing required gender field" }),
+  weight: Joi.number()
+    .min(1)
+    .max(200)
+    .required()
+    .messages({ "any.required": "missing required weight field" }),
+  hours: Joi.number()
+    .min(1)
+    .max(24)
+    .required()
+    .messages({ "any.required": "missing required hours field" }),
+  yourAmountWater: Joi.number().min(1).max(15),
 });
 
 const authValidation = Joi.object({
