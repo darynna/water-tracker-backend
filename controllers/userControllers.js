@@ -4,9 +4,10 @@ const {
   logoutUser,
   getUserInfo,
   changeUserinformation,
-  updateAvatar
+  updateAvatar,
+  updateDailyNormaService,
 } = require("../db/services/userServices");
-const { catchAsync } = require('../utilities');
+const { catchAsync } = require("../utilities");
 
 // Authentication
 exports.signup = catchAsync(async (req, res) => {
@@ -29,25 +30,40 @@ exports.login = catchAsync(async (req, res) => {
   });
 });
 
-
 exports.logout = catchAsync(async (req, res) => {
   await logoutUser(req.user);
   res.status(204).json();
 });
 
-
 // User
-exports.getUserInfo= catchAsync(async(req, res) =>{
+exports.getUserInfo = catchAsync(async (req, res) => {
   const userInfo = await getUserInfo(req);
   res.status(200).json(userInfo);
-} );
+});
 
-exports.changeUserinformation = catchAsync(async(req, res) => {
+exports.changeUserinformation = catchAsync(async (req, res) => {
   const updatedUser = await changeUserinformation(req, res);
   res.status(200).json(updatedUser);
-})
+});
 
-exports.updateAvatar = catchAsync(async(req, res) => {
+exports.updateAvatar = catchAsync(async (req, res) => {
   const avatarURL = await updateAvatar;
   res.status(200).json({ avatarURL });
-})
+});
+
+exports.updateDailyNorma = catchAsync(async (req, res) => {
+  const { _id } = req.user;
+  const { dailyNorma } = req.body;
+
+  // // Розрахунок денної норми води
+  // let dailyNorma = 1.5;
+  // const { gender, weight, time } = req.body;
+  // if (gender === "woman") {
+  //   dailyNorma = weight * 0.03 + time * 0.4;
+  // }
+  // dailyNorma = weight * 0.4 + time * 0.6;
+
+  const updatedUser = await updateDailyNormaService(_id, dailyNorma);
+
+  res.status(200).json(updatedUser);
+});

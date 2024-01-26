@@ -1,12 +1,15 @@
 const {
-    signup,
-    login,
-    getCurrent,
-    logout,
-    getUserInfo,
-    changeUserinformation,
-    updateAvatar
-} = require('./userControllers')   
+  signup,
+  login,
+  getCurrent,
+  logout,
+  getUserInfo,
+  changeUserinformation,
+  updateAvatar,
+  updateDailyNorma,
+} = require("./userControllers");
+
+const { addWater, updateWater, deleteById } = require("./waterControllers");
 
 module.exports = {
   signup,
@@ -15,5 +18,10 @@ module.exports = {
   logout,
   getUserInfo,
   changeUserinformation,
-  updateAvatar
-  }
+  updateAvatar,
+
+  addWater,
+  updateWater,
+  deleteById,
+  updateDailyNorma,
+};

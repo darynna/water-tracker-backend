@@ -1,19 +1,28 @@
-const express = require('express')
+const express = require("express");
+const { authantication, validateBody, isValidId } = require("../../middleware");
+const { bodyValidation } = require("../../utilities");
 
-const router = express.Router()
+const { addWater, updateWater, deleteById } = require("../../controllers");
 
-// привіта я просто накидала якісь варіанти роутів, не запевняю що вони всі правильні але буде що обговорити))))))))
+const router = express.Router();
 
-// додати запису про вживану воду
-router.post('/notes');
-// редагувати існуючу нотатку про воду 
-router.patch('/notes');
-// видалити нотатку
-router.delete('/notes');
+// *додати запису про вживану воду
+router.post("/", authantication, validateBody(bodyValidation), addWater);
 
+// ?редагувати існуючу нотатку про воду
+router.put(
+  "/:id",
+  authantication,
+  isValidId,
+  validateBody(bodyValidation),
+  updateWater
+);
 
-// ендпоінт для взяття води за поточний день
-router.post('/consuption');
-router.get('/consuption/:month')
+// !видалити нотатку
+router.delete("/:id", authantication, isValidId, deleteById);
 
-module.exports = router
+// *ендпоінт для взяття води за поточний день
+router.post("/consuption");
+router.get("/consuption/:month");
+
+module.exports = router;

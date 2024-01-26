@@ -1,25 +1,43 @@
-const express = require('express')
+const express = require("express");
 const {
-    signup,
-    login,
-    logout,
-    getUserInfo,
-    changeUserinformation,
-    updateAvatar
-} = require('../../controllers')
+  signup,
+  login,
+  logout,
+  getUserInfo,
+  changeUserinformation,
+  updateAvatar,
+  updateDailyNorma,
+} = require("../../controllers");
 
-const {authValidation} = require('../../utilities')
-const {validateBody, authantication, uploadUserPhoto} = require("../../middleware")
+const { authValidation } = require("../../utilities");
+const {
+  validateBody,
+  authantication,
+  uploadUserPhoto,
+} = require("../../middleware");
+const { dailyNormaValidation } = require("../../utilities/validation");
 
 const router = express.Router();
 
-router.post('/register',validateBody(authValidation), signup);
-router.post('/login',validateBody(authValidation), login);
+router.post("/register", validateBody(authValidation), signup);
+router.post("/login", validateBody(authValidation), login);
 router.post("/logout", authantication, logout);
 
 router.get("/", authantication, getUserInfo);
 router.patch("/update", authantication, changeUserinformation);
-router.patch("/avatar", authantication, uploadUserPhoto.single("avatarURL"), updateAvatar)
-router.patch("/rate")
+router.patch(
+  "/avatar",
+  authantication,
+  uploadUserPhoto.single("avatarURL"),
+  updateAvatar
+);
+
+// *ендпоінт для оновлення кількості води (dailyNorma)
+router.patch(
+  "/dailyNorma",
+  authantication,
+  validateBody(dailyNormaValidation),
+  updateDailyNorma
+);
 
 module.exports = router;
