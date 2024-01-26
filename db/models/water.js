@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { handleMongooseError } = require('../../utilities');
+const { handleMongooseError } = require("../../utilities");
 
 const WaterSchema = new Schema(
   {

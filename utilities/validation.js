@@ -1,39 +1,50 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
 const bodyValidation = Joi.object({
-    name: Joi.string()
-      .min(2)
-      .required()
-      .messages({ "any.required": "missing required name field" }),
-    email: Joi.string()
-      .min(4)
-      .required()
-      .messages({ "any.required": "missing required email field" }),
-    phone: Joi.string()
-      .required()
-      .min(6)
-      .messages({ "any.required": "missing required phone field" }),
-      favorite: Joi.boolean(),
-      
-  });
-  
+  waterAmount: Joi.number()
+    .min(1)
+    .max(5000)
+    .required()
+    .messages({ "any.required": "missing required waterAmount field" }),
+  date: Joi.date()
+    .required()
+    .messages({ "any.required": "missing required date field" }),
+});
+const dailyNormaValidation = Joi.object({
+  dailyNorma: Joi.number()
+    .min(1)
+    .max(15000)
+    .required()
+    .messages({ "any.required": "missing required dailyNorma field" }),
+  // gender: Joi.string()
+  //   .required()
+  //   .messages({ "any.required": "missing required gender field" }),
+  // weight: Joi.number()
+  //   .min(1)
+  //   .max(200)
+  //   .required()
+  //   .messages({ "any.required": "missing required weight field" }),
+  // time: Joi.number()
+  //   .min(1)
+  //   .max(24)
+  //   .required()
+  //   .messages({ "any.required": "missing required time field" }),
+  // yourAmountWater: Joi.number().min(1).max(15000),
+});
 
-  const authValidation = Joi.object({
-    email: Joi.string()
-      .min(4)
-      .required()
-      .messages({ "any.required": "not acceptable data" }),
-    password: Joi.string()
-      .min(4)
-      .required()
-      .messages({ "any.required": "not acceptable data" }),  
-  });
+const authValidation = Joi.object({
+  email: Joi.string()
+    .min(4)
+    .required()
+    .messages({ "any.required": "not acceptable data" }),
+  password: Joi.string()
+    .min(4)
+    .required()
+    .messages({ "any.required": "not acceptable data" }),
+});
 
-
-  module.exports = {
-    bodyValidation,
-    authValidation
-  };
-
-
-  
+module.exports = {
+  bodyValidation,
+  authValidation,
+  dailyNormaValidation,
+};
