@@ -1,0 +1,401 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Water tracker API docs",
+    "description": "The API for the Water tracker  project",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://water-tracker-backend-0wax.onrender.com/api"
+    },
+    {
+      "url": "http://localhost:5001/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "User info",
+      "description": "User information endpoints"
+    },
+    {
+      "name": "Water",
+      "description": "Water endpoints"
+    }
+  ],
+  "paths": {
+    "/user/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a new user.",
+        "requestBody": {
+          "description": "Registration's object",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "There are missing fields"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "Email in use"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login user.",
+        "requestBody": {
+          "description": "Registration's object",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "There are missing fields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "Email or password is wrong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout user.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/": {
+      "get": {
+        "tags": ["User info"],
+        "summary": "Get user information.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "401": {
+              "description": "Unauthorized - Invalid or empty access token",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "Not authorized"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/update": {
+      "patch": {
+        "tags": ["User info"],
+        "summary": "Update user information.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "401": {
+              "description": "Unauthorized - Invalid or empty access token",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "Not authorized"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/avatar": {
+      "patch": {
+        "tags": ["User info"],
+        "summary": "Update user avatar.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "401": {
+              "description": "Unauthorized - Invalid or empty access token",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "Not authorized"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "File upload error",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "File upload error"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/dailyNorma": {
+      "patch": {
+        "tags": ["User info"],
+        "summary": "Update user daily norma.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "401": {
+              "description": "Unauthorized - Invalid or empty access token",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "Not authorized"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Daily norma was exceeded",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "dailyNorma cannot exceed 15"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found",
+              "content": {
+                "application/json": {
+                  "schema": {},
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
