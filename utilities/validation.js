@@ -1,12 +1,14 @@
 const Joi = require("joi");
-
+// const convertTimeToDateTime = require("../utilities/validateTime");
 const bodyValidation = Joi.object({
   waterAmount: Joi.number()
     .min(1)
     .max(5000)
     .required()
     .messages({ "any.required": "missing required waterAmount field" }),
-  date: Joi.date()
+  date: Joi
+  // .custom(convertTimeToDateTime,  'custom validation')
+    .string()
     .required()
     .messages({ "any.required": "missing required date field" }),
 });
