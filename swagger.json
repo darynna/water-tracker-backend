@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Water tracker API docs",
-    "description": "The API for the Water tracker  project",
+    "title": "Water tracker API docs 💧",
+    "description": "💦 The API for the Water tracker project 💦",
     "version": "1.0.0"
   },
   "servers": [
