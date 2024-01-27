@@ -7,7 +7,7 @@ const bodyValidation = Joi.object({
     .required()
     .messages({ "any.required": "missing required waterAmount field" }),
   date: Joi
-  // .custom(convertTimeToDateTime,  'custom validation')
+    // .custom(convertTimeToDateTime,  'custom validation')
     .string()
     .required()
     .messages({ "any.required": "missing required date field" }),
@@ -27,7 +27,7 @@ const dailyNormaValidation = Joi.object({
     .required()
     .messages({ "any.required": "missing required weight field" }),
   hours: Joi.number()
-    .min(1)
+    .min(0)
     .max(24)
     .required()
     .messages({ "any.required": "missing required hours field" }),
