@@ -53,15 +53,16 @@ exports.updateAvatar = catchAsync(async (req, res) => {
 
 exports.updateDailyNorma = catchAsync(async (req, res) => {
   const { _id } = req.user;
-  const { dailyNorma } = req.body;
+  // const { dailyNorma } = req.body;
 
-  // // Розрахунок денної норми води
-  // let dailyNorma = 1.5;
-  // const { gender, weight, time } = req.body;
-  // if (gender === "woman") {
-  //   dailyNorma = weight * 0.03 + time * 0.4;
-  // }
-  // dailyNorma = weight * 0.4 + time * 0.6;
+  // Розрахунок денної норми води
+  let dailyNorma = 1.5;
+  const { gender, weight, hours } = req.body;
+  if (gender === "woman") {
+    dailyNorma = weight * 0.03 + hours * 0.4;
+  } else if (gender === "man") {
+    dailyNorma = weight * 0.04 + hours * 0.6;
+  }
 
   const updatedUser = await updateDailyNormaService(_id, dailyNorma);
 
