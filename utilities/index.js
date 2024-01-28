@@ -6,7 +6,8 @@ const {
   authValidation,
 } = require("./validation");
 const handleMongooseError = require("./handleMongooseError");
-const { formatDate, formatMonth, formatDay } = require("./formatDate");
+const { formatDate, formatDay } = require("./formatDate");
+
 module.exports = {
   catchAsync,
   httpError,
@@ -15,6 +16,5 @@ module.exports = {
   authValidation,
   handleMongooseError,
   formatDate,
-  formatMonth,
   formatDay,
 };

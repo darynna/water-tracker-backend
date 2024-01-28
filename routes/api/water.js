@@ -26,6 +26,6 @@ router.delete("/:id", authantication, isValidId, deleteById);
 
 // *ендпоінт для взяття води за поточний день
 router.post("/consuption");
-router.get("/consuption/:month:day", authantication, consuptionWaterForMonth);
+router.get("/consuption/:userDate", authantication, consuptionWaterForMonth);
 
 module.exports = router;
