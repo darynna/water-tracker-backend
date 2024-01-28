@@ -13,8 +13,7 @@ const { authValidation } = require("../../utilities");
 const {
   validateBody,
   authantication,
-  upload, 
-  uploadAvatar
+  upload
 } = require("../../middleware");
 const { dailyNormaValidation } = require("../../utilities/validation");
 
@@ -30,7 +29,6 @@ router.patch(
   "/avatar",
   authantication,
   upload.single("avatar"),
-  uploadAvatar,
   updateAvatar
 );
 
