@@ -1,6 +1,5 @@
 const { format } = require("date-fns");
 
-exports.formatMonth = (date) => format(new Date(date), "L");
-exports.formatDay = (date) => format(new Date(date), "d");
+exports.formatDay = (date) => format(new Date(date), "d,L, y");
 
 exports.formatDate = (date) => format(new Date(date), "d, LLLL");
