@@ -3,6 +3,9 @@ const { authantication, validateBody, isValidId } = require("../../middleware");
 const { bodyValidation } = require("../../utilities");
 
 const { addWater, updateWater, deleteById } = require("../../controllers");
+const {
+  consuptionWaterForMonth,
+} = require("../../controllers/waterControllers");
 
 const router = express.Router();
 
@@ -23,6 +26,6 @@ router.delete("/:id", authantication, isValidId, deleteById);
 
 // *ендпоінт для взяття води за поточний день
 router.post("/consuption");
-router.get("/consuption/:month");
+router.get("/consuption/:month:day", authantication, consuptionWaterForMonth);
 
 module.exports = router;
