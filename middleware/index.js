@@ -2,6 +2,6 @@ const validateBody = require("./bodyValidation");
 const isValidId = require('./idValidation');
 const isEmptyReqBody = require('./emptyBodyValidation')
 const authantication = require("./authantication")
-const uploadUserPhoto = require("./uploadAvatar")
+const { upload, uploadAvatar } = require("./uploadAvatar")
 
-module.exports =  {validateBody, isValidId, isEmptyReqBody, authantication, uploadUserPhoto}
+module.exports =  {validateBody, isValidId, isEmptyReqBody, authantication, upload, uploadAvatar}

@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-const path = require("path");
-const fs = require("fs/promises");
-const Jimp = require("jimp");
+// const path = require("path");
+// const fs = require("fs/promises");
+// const Jimp = require("jimp");
 const bcrypt = require("bcrypt");
 const gravatar = require("gravatar");
 const { User } = require("../models/users");
@@ -55,9 +55,7 @@ const logoutUser = async (user) => {
 
 const getUserInfo = async (req) => {
   const user = await User.findById(req.user.id).select("-password");
-  if (!user) {
-    return req.status(404).json({ msg: "User not found" });
-  }
+  if (!user) throw httpError(404, "User not found" )
   return user;
 };
 
@@ -65,9 +63,8 @@ const changeUserinformation = async (req, res) => {
   const { name, email, avatarURL, gender, dailyNorma, newPassword } = req.body;
   const user = await getUserInfo(req);
 
-  if (!user) {
-    return res.status(404).json({ msg: "User not found" });
-  }
+  if (!user) throw httpError(404, "User not found" )
+  
 
   user.name = name || user.name;
   user.email = email || user.email;
@@ -84,27 +81,13 @@ const changeUserinformation = async (req, res) => {
   return user;
 };
 
-const avatarsDir = path.join(__dirname, "../", "public", "avatars");
-
 const updateAvatar = async (req, res) => {
-  if (!req.file) {
-    throw httpError(400, "File upload error");
-  }
   const { _id } = req.user;
-  const { path: tempUpload, originalname } = req.file;
-  const fileName = `${_id}_${originalname}`;
-
-  const resultUpload = path.join(avatarsDir, fileName);
-  await fs.rename(tempUpload, resultUpload);
-
-  const image = await Jimp.read(resultUpload);
-  await image.contain(250, 250);
-  await image.writeAsync(resultUpload);
-
-  const avatarURL = path.join("avatars", fileName);
+  const avatarURL = req.avatarURL; 
+  if (!avatarURL) throw httpError(500, "Server problem")
+  
   await User.findByIdAndUpdate(_id, { avatarURL });
-
-  return avatarURL;
+  return avatarURL
 };
 
 const updateDailyNormaService = async (id, dailyNorma) => {

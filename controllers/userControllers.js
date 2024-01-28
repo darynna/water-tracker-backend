@@ -47,7 +47,7 @@ exports.changeUserinformation = catchAsync(async (req, res) => {
 });
 
 exports.updateAvatar = catchAsync(async (req, res) => {
-  const avatarURL = await updateAvatar;
+  const avatarURL = await updateAvatar(req, res);
   res.status(200).json({ avatarURL });
 });
 
