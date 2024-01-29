@@ -9,7 +9,7 @@ const {
   updateDailyNorma,
 } = require("./userControllers");
 
-const { addWater, updateWater, deleteById } = require("./waterControllers");
+const { addWater, updateWater, deleteById, getSummary } = require("./waterControllers");
 
 module.exports = {
   signup,
@@ -24,4 +24,5 @@ module.exports = {
   updateWater,
   deleteById,
   updateDailyNorma,
+  getSummary
 };

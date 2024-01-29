@@ -3,6 +3,7 @@ const {
   updateWaterService,
   deleteWaterService,
   findUserWater,
+  getWaterConsumptionDaySummary
 } = require("../db/services/waterServices");
 const {
   catchAsync,
@@ -45,8 +46,9 @@ const deleteById = async (req, res) => {
   }
   res.status(200).json({ massage: "Water deleted" });
 };
+
 // !~~consuption Water For Month and day;
-const consuptionWaterForMonth = async (req, res) => {
+const consumptionWaterForMonth = async (req, res) => {
   const { userDate } = req.params;
   const day = formatDay(userDate);
 
@@ -84,9 +86,18 @@ const consuptionWaterForMonth = async (req, res) => {
   });
 };
 
+const getSummary = async (req, res) => {
+  console.log("hello")
+  const { _id: owner } = req.user;
+  const { date } = req.query;
+  const waterConsumptionArray = await getWaterConsumptionDaySummary(owner, date);
+  res.status(200).json({waterConsumptionArray: waterConsumptionArray})
+}
+
 module.exports = {
   addWater: catchAsync(addWater),
   updateWater: catchAsync(updateWater),
   deleteById: catchAsync(deleteById),
-  consuptionWaterForMonth: catchAsync(consuptionWaterForMonth),
+  consumptionWaterForMonth: catchAsync(consumptionWaterForMonth),
+  getSummary: catchAsync(getSummary)
 };

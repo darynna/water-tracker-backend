@@ -30,6 +30,11 @@ exports.login = catchAsync(async (req, res) => {
   });
 });
 
+exports.getCurrent = async (req, res) => {
+  const { email } = req.user;
+  res.json({ email });
+};
+
 exports.logout = catchAsync(async (req, res) => {
   await logoutUser(req.user);
   res.status(204).json();

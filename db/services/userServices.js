@@ -1,7 +1,4 @@
 const jwt = require("jsonwebtoken");
-// const path = require("path");
-// const fs = require("fs/promises");
-// const Jimp = require("jimp");
 const bcrypt = require("bcrypt");
 const gravatar = require("gravatar");
 const { User } = require("../models/users");

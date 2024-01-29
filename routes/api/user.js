@@ -3,6 +3,7 @@ const {
   signup,
   login,
   logout,
+  getCurrent,
   getUserInfo,
   changeUserinformation,
   updateAvatar,
@@ -22,6 +23,8 @@ const router = express.Router();
 router.post("/register", validateBody(authValidation), signup);
 router.post("/login", validateBody(authValidation), login);
 router.post("/logout", authantication, logout);
+
+router.get("/current", authantication, getCurrent);
 
 router.get("/", authantication, getUserInfo);
 router.patch("/update", authantication, changeUserinformation);
