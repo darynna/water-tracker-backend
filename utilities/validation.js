@@ -5,8 +5,7 @@ const bodyValidation = Joi.object({
     .max(5000)
     .required()
     .messages({ "any.required": "missing required waterAmount field" }),
-  date: Joi
-    .string()
+  date: Joi.string()
     .required()
     .messages({ "any.required": "missing required date field" }),
 });
@@ -16,20 +15,6 @@ const dailyNormaValidation = Joi.object({
     .max(15000)
     .required()
     .messages({ "any.required": "missing required dailyNorma field" }),
-  // gender: Joi.string()
-  //   .required()
-  //   .messages({ "any.required": "missing required gender field" }),
-  // weight: Joi.number()
-  //   .min(1)
-  //   .max(200)
-  //   .required()
-  //   .messages({ "any.required": "missing required weight field" }),
-  // hours: Joi.number()
-  //   .min(0)
-  //   .max(24)
-  //   .required()
-  //   .messages({ "any.required": "missing required hours field" }),
-  // yourAmountWater: Joi.number().min(1).max(15),
 });
 
 const authValidation = Joi.object({
@@ -43,9 +28,7 @@ const authValidation = Joi.object({
     .messages({ "any.required": "not acceptable data" }),
 });
 
-
 const todayDatevalidation = Joi.object({
-  owner: Joi.string().required(),
   date: Joi.string()
     .regex(/^\d{4}-\d{2}-\d{2}$/)
     .required()
@@ -54,20 +37,15 @@ const todayDatevalidation = Joi.object({
     }),
 });
 
-const validateInput = (owner, year, month) => {
-  const schema = Joi.object({
-    owner: Joi.string().required(),
-    year: Joi.number().integer().min(1900).max(2100).required(),
-    month: Joi.number().integer().min(1).max(12).required(),
-  });
-
-  return schema.validate({ owner, year, month });
-};
+const validateInput = Joi.object({
+  year: Joi.number().integer().min(1900).max(2100).required(),
+  month: Joi.number().integer().min(1).max(12).required(),
+});
 
 module.exports = {
   bodyValidation,
   authValidation,
   dailyNormaValidation,
   todayDatevalidation,
-  validateInput
+  validateInput,
 };
