@@ -1,5 +1,4 @@
 const Joi = require("joi");
-// const convertTimeToDateTime = require("../utilities/validateTime");
 const bodyValidation = Joi.object({
   waterAmount: Joi.number()
     .min(1)
@@ -7,7 +6,6 @@ const bodyValidation = Joi.object({
     .required()
     .messages({ "any.required": "missing required waterAmount field" }),
   date: Joi
-    // .custom(convertTimeToDateTime,  'custom validation')
     .string()
     .required()
     .messages({ "any.required": "missing required date field" }),
@@ -45,8 +43,31 @@ const authValidation = Joi.object({
     .messages({ "any.required": "not acceptable data" }),
 });
 
+
+const todayDatevalidation = Joi.object({
+  owner: Joi.string().required(),
+  date: Joi.string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .required()
+    .messages({
+      "string.pattern.base": '"date" must be in the "yyyy-mm-dd" format',
+    }),
+});
+
+const validateInput = (owner, year, month) => {
+  const schema = Joi.object({
+    owner: Joi.string().required(),
+    year: Joi.number().integer().min(1900).max(2100).required(),
+    month: Joi.number().integer().min(1).max(12).required(),
+  });
+
+  return schema.validate({ owner, year, month });
+};
+
 module.exports = {
   bodyValidation,
   authValidation,
   dailyNormaValidation,
+  todayDatevalidation,
+  validateInput
 };

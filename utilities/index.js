@@ -4,6 +4,8 @@ const {
   bodyValidation,
   updateFavoriteValidation,
   authValidation,
+  todayDatevalidation,
+  validateInput
 } = require("./validation");
 const handleMongooseError = require("./handleMongooseError");
 const { formatDate, formatDay } = require("./formatDate");
@@ -13,8 +15,10 @@ module.exports = {
   httpError,
   bodyValidation,
   updateFavoriteValidation,
+  todayDatevalidation,
   authValidation,
   handleMongooseError,
   formatDate,
   formatDay,
+  validateInput
 };

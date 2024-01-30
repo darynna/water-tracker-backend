@@ -46,7 +46,6 @@ const deleteById = async (req, res) => {
 // Ти молодець, що таку круту шайтан-машину розібрала і написала)))
 
 const getSummary = async (req, res) => {
-  console.log("hello");
   const { _id: owner } = req.user;
   const { date } = req.query;
   const waterConsumptionArray = await getWaterConsumptionDaySummary(
