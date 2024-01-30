@@ -33,9 +33,9 @@ const updateWater = async (req, res) => {
 };
 
 const deleteById = async (req, res) => {
-  const { id } = req.params;
+  const { waterId } = req.params;
   const { _id: owner } = req.user;
-  const deletedWater = await deleteWaterService(id, owner);
+  const deletedWater = await deleteWaterService(waterId, owner);
   if (!deletedWater) {
     throw httpError(404, "Not found");
   }
@@ -54,7 +54,6 @@ const getSummary = async (req, res) => {
 const getSummaryMonth = async (req, res) => {
   const { _id: owner } = req.user;
   const { year, month } = req.query;
-  console.log(" year, month : ", year, month);
 
   const waterConsumptionMonth = await getWaterConsumptionMonthSummary(
     owner,

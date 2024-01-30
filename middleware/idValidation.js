@@ -2,9 +2,9 @@ const { isValidObjectId } = require("mongoose");
 const { httpError } = require("../utilities");
 
 const isValidId = (req, res, next) => {
-  const { id } = req.params;
-  if (!isValidObjectId(id)) {
-    next(httpError(400, `${id} is not valid id`));
+  const { waterId } = req.params;
+  if (!isValidObjectId(waterId)) {
+    next(httpError(400, `${waterId} is not valid id`));
     return;
   }
   next();

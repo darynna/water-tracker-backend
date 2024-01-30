@@ -1,6 +1,15 @@
 const express = require("express");
-const { authantication, validateBody, isValidId, validateQuery } = require("../../middleware");
-const { bodyValidation, todayDatevalidation, validateInput } = require("../../utilities");
+const {
+  authantication,
+  validateBody,
+  isValidId,
+  validateQuery,
+} = require("../../middleware");
+const {
+  bodyValidation,
+  todayDatevalidation,
+  validateInput,
+} = require("../../utilities");
 
 const {
   addWater,
@@ -25,11 +34,21 @@ router.put(
 );
 
 // !видалити нотатку
-router.delete("/:id", authantication, isValidId, deleteById);
+router.delete("/:waterId", authantication, isValidId, deleteById);
 
 // *ендпоінт для взяття води за поточний день
-router.get("/today", authantication,validateQuery(todayDatevalidation), getSummary);
+router.get(
+  "/today",
+  authantication,
+  validateQuery(todayDatevalidation),
+  getSummary
+);
 // *ендпоінт для взяття води за поточний місяць
-router.get("/month", authantication, validateQuery(validateInput), getSummaryMonth);
+router.get(
+  "/month",
+  authantication,
+  validateQuery(validateInput),
+  getSummaryMonth
+);
 
 module.exports = router;
