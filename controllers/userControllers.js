@@ -60,14 +60,6 @@ exports.updateDailyNorma = catchAsync(async (req, res) => {
   const { _id } = req.user;
   const { dailyNorma } = req.body;
 
-  // Розрахунок денної норми води
-  // const { gender, weight, hours } = req.body;
-
-  // const dailyNorma =
-  //   gender === "woman"
-  //     ? weight * 0.03 + hours * 0.4
-  //     : weight * 0.04 + hours * 0.6;
-
   if (dailyNorma > 15) {
     res.status(400).json({ message: "dailyNorma cannot exceed 15" });
   }

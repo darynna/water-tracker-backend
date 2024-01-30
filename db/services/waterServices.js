@@ -33,7 +33,6 @@ const getWaterConsumptionDaySummary = async (owner, date) => {
   const user = await User.findById(owner);
   if (!user) throw httpError(404, "User not found");
   const dailyNormAmount = user.dailyNorma;
-  // тут просто вкінці букви А не було, тому і приходив null)))
 
   let waterConsumptionArray = await Water.aggregate([
     {
@@ -59,10 +58,8 @@ const getWaterConsumptionDaySummary = async (owner, date) => {
     {
       $addFields: {
         waterVolumePercentage: {
-          // $round: дописала щоб округлити 63.33333 до 63)))
           $round: {
             $multiply: [
-              // dailyNormAmount (1.5) перевела у мл, бо waterVolumeSum у нас в мл
               { $divide: ["$waterVolumeSum", dailyNormAmount * 1000] },
               100,
             ],

@@ -42,9 +42,6 @@ const deleteById = async (req, res) => {
   res.status(200).json({ massage: "Water deleted" });
 };
 
-// ?Даринко, в процесі розбору коду, трішки підкоригувала та залишила коменти, якщо ти не проти)))
-// Ти молодець, що таку круту шайтан-машину розібрала і написала)))
-
 const getSummary = async (req, res) => {
   const { _id: owner } = req.user;
   const { date } = req.query;
@@ -52,15 +49,12 @@ const getSummary = async (req, res) => {
     owner,
     date
   );
-  res.status(200).json(
-    // У відповідь приходив об'єкт з масивом в якому ще один об'єкт, а вже в об'єкті всі дані.
-    // Тому взяла waterConsumptionArray[0], щоб просто не було того першого масиву у відповіді.
-    waterConsumptionArray[0]
-  );
+  res.status(200).json(waterConsumptionArray[0]);
 };
 const getSummaryMonth = async (req, res) => {
   const { _id: owner } = req.user;
   const { year, month } = req.query;
+  console.log(" year, month : ", year, month);
 
   const waterConsumptionMonth = await getWaterConsumptionMonthSummary(
     owner,
