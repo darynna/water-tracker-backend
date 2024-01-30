@@ -1,6 +1,6 @@
 const Water = require("../models/water");
 const { User } = require("../models/users");
-const { httpError } = require("../../utilities");
+const { httpError, formatDate } = require("../../utilities");
 
 const addWaterService = async (body) => {
   const { date } = body;
@@ -28,15 +28,13 @@ const deleteWaterService = async (id, owner) => {
   const delatedWater = await Water.findOneAndDelete({ _id: id, owner });
   return delatedWater;
 };
-const findUserWater = async (owner) => {
-  const userWater = await Water.find({ owner });
-  return userWater;
-};
 
 const getWaterConsumptionDaySummary = async (owner, date) => {
   const user = await User.findById(owner);
   if (!user) throw httpError(404, "User not found");
-  const dailyNormAmount = user.dailyNorm;
+  const dailyNormAmount = user.dailyNorma;
+  // тут просто вкінці букви А не було, тому і приходив null)))
+
   let waterConsumptionArray = await Water.aggregate([
     {
       $match: {
@@ -54,22 +52,29 @@ const getWaterConsumptionDaySummary = async (owner, date) => {
     {
       $group: {
         _id: null,
-        waterVolumeSum: { $sum: "$waterAmount"},
+        waterVolumeSum: { $sum: "$waterAmount" },
         waterVolumes: { $push: "$$ROOT" },
       },
     },
     {
       $addFields: {
         waterVolumePercentage: {
-          $multiply: [{ $divide: ["$waterVolumeSum", dailyNormAmount] }, 100] 
-        }
+          // $round: дописала щоб округлити 63.33333 до 63)))
+          $round: {
+            $multiply: [
+              // dailyNormAmount (1.5) перевела у мл, бо waterVolumeSum у нас в мл
+              { $divide: ["$waterVolumeSum", dailyNormAmount * 1000] },
+              100,
+            ],
+          },
+        },
       },
     },
     {
       $project: {
         _id: 0,
       },
-    }
+    },
   ]);
   if (waterConsumptionArray.length === 0) {
     waterConsumptionArray = [
@@ -79,17 +84,79 @@ const getWaterConsumptionDaySummary = async (owner, date) => {
         waterVolumePercentage: 0,
       },
     ];
-  };
+  }
 
-  console.log(waterConsumptionArray)
+  console.log(waterConsumptionArray);
 
-  return waterConsumptionArray
+  return waterConsumptionArray;
+};
+
+const getWaterConsumptionMonthSummary = async (owner, year, month) => {
+  const user = await User.findById(owner);
+  if (!user) throw httpError(404, "User not found");
+
+  const dailyNormAmount = user.dailyNorma;
+  const firstDayOfMonth = new Date(year, month - 1, 1);
+  const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59, 999);
+
+  const waterConsumptionArray = await Water.aggregate([
+    {
+      $match: {
+        owner: owner,
+        date: { $gte: firstDayOfMonth, $lt: lastDayOfMonth },
+      },
+    },
+    {
+      $group: {
+        _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+        waterVolumeSum: { $sum: "$waterAmount" },
+        waterVolumes: { $push: "$$ROOT" },
+      },
+    },
+    {
+      $addFields: {
+        waterVolumePercentage: {
+          $round: {
+            $multiply: [
+              { $divide: ["$waterVolumeSum", dailyNormAmount * 1000] },
+              100,
+            ],
+          },
+        },
+      },
+    },
+    {
+      $sort: { _id: 1 },
+    },
+    {
+      $project: {
+        _id: 0,
+        date: "$_id",
+        waterVolumeSum: 1,
+        waterVolumes: 1,
+        waterVolumePercentage: 1,
+      },
+    },
+  ]);
+
+  const resultObject = waterConsumptionArray.reduce((acc, item) => {
+    acc[item.date] = {
+      waterVolumes: item.waterVolumes,
+      date: formatDate(item.date),
+      waterVolumeTimes: item.waterVolumes.length,
+      waterVolumePercentage: item.waterVolumePercentage,
+      dailyNorma: dailyNormAmount,
+    };
+    return acc;
+  }, {});
+
+  return resultObject;
 };
 
 module.exports = {
   addWaterService,
   updateWaterService,
   deleteWaterService,
-  findUserWater,
   getWaterConsumptionDaySummary,
+  getWaterConsumptionMonthSummary,
 };

@@ -2,15 +2,10 @@ const {
   addWaterService,
   updateWaterService,
   deleteWaterService,
-  findUserWater,
-  getWaterConsumptionDaySummary
+  getWaterConsumptionDaySummary,
+  getWaterConsumptionMonthSummary,
 } = require("../db/services/waterServices");
-const {
-  catchAsync,
-  httpError,
-  formatDate,
-  formatDay,
-} = require("../utilities");
+const { catchAsync, httpError } = require("../utilities");
 
 const addWater = async (req, res) => {
   const { _id: owner } = req.user;
@@ -47,57 +42,39 @@ const deleteById = async (req, res) => {
   res.status(200).json({ massage: "Water deleted" });
 };
 
-// !~~consuption Water For Month and day;
-const consumptionWaterForMonth = async (req, res) => {
-  const { userDate } = req.params;
-  const day = formatDay(userDate);
-
-  const { _id: owner, dailyNorma } = req.user;
-  const userWater = await findUserWater(owner);
-
-  if (!userWater) {
-    throw httpError(404, "Not found");
-  }
-
-  const userWaterForDay = userWater.filter((water) => {
-    const dateString = water.date;
-    const currentDay = formatDay(dateString);
-    return currentDay === day;
-  });
-
-  const arryAmountForDay = userWaterForDay.map((water) => {
-    return water.waterAmount;
-  });
-
-  const sum = arryAmountForDay.reduce(function (acc, currentValue) {
-    return acc + currentValue;
-  }, 0);
-
-  const percentConsuption = Math.round((sum * 100) / (dailyNorma * 1000));
-  const date = formatDate(userWaterForDay[0].date);
-  const timesConsuption = userWaterForDay.length;
-
-  res.status(200).json({
-    userWaterForDay,
-    date,
-    percentConsuption,
-    timesConsuption,
-    dailyNorma,
-  });
-};
+// ?Даринко, в процесі розбору коду, трішки підкоригувала та залишила коменти, якщо ти не проти)))
+// Ти молодець, що таку круту шайтан-машину розібрала і написала)))
 
 const getSummary = async (req, res) => {
-  console.log("hello")
+  console.log("hello");
   const { _id: owner } = req.user;
   const { date } = req.query;
-  const waterConsumptionArray = await getWaterConsumptionDaySummary(owner, date);
-  res.status(200).json({waterConsumptionArray: waterConsumptionArray})
-}
+  const waterConsumptionArray = await getWaterConsumptionDaySummary(
+    owner,
+    date
+  );
+  res.status(200).json(
+    // У відповідь приходив об'єкт з масивом в якому ще один об'єкт, а вже в об'єкті всі дані.
+    // Тому взяла waterConsumptionArray[0], щоб просто не було того першого масиву у відповіді.
+    waterConsumptionArray[0]
+  );
+};
+const getSummaryMonth = async (req, res) => {
+  const { _id: owner } = req.user;
+  const { year, month } = req.query;
+
+  const waterConsumptionMonth = await getWaterConsumptionMonthSummary(
+    owner,
+    year,
+    month
+  );
+  res.status(200).json(waterConsumptionMonth);
+};
 
 module.exports = {
   addWater: catchAsync(addWater),
   updateWater: catchAsync(updateWater),
   deleteById: catchAsync(deleteById),
-  consumptionWaterForMonth: catchAsync(consumptionWaterForMonth),
-  getSummary: catchAsync(getSummary)
+  getSummary: catchAsync(getSummary),
+  getSummaryMonth: catchAsync(getSummaryMonth),
 };
