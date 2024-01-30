@@ -36,7 +36,9 @@
           "description": "Registration's object",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationLoginRequest"
+              }
             }
           },
           "required": true
