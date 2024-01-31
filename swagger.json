@@ -672,8 +672,8 @@
         ]
       }
     }
-  },
-
+  }
+},
   "components": {
     "schemas":{
 "RegistrationLoginScheme":{
@@ -835,7 +835,6 @@
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }
-    }
   }
 }
 
