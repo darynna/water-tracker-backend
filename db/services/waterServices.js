@@ -1,27 +1,29 @@
 const Water = require("../models/water");
 const { User } = require("../models/users");
-const { httpError, formatDate } = require("../../utilities");
+const {
+  httpError,
+  formatDate,
+  formatDateForEndpoins,
+} = require("../../utilities");
 
 const addWaterService = async (body) => {
   const { date } = body;
-  const timeComponents = date.split(":");
-  const hours = Number(timeComponents[0]);
-  const minutes = Number(timeComponents[1]);
-
-  // Get the current date
-  const currentDate = new Date();
-
-  // Set the hours and minutes
-  currentDate.setHours(hours);
-  currentDate.setMinutes(minutes);
+  const currentDate = formatDateForEndpoins(date);
 
   const newWaterNote = await Water.create({ ...body, date: currentDate });
   return newWaterNote;
 };
 const updateWaterService = async (id, owner, body) => {
-  const updatedNote = await Water.findOneAndUpdate({ _id: id, owner }, body, {
-    new: true,
-  });
+  const { date } = body;
+  const currentDate = formatDateForEndpoins(date);
+
+  const updatedNote = await Water.findOneAndUpdate(
+    { _id: id, owner },
+    { ...body, date: currentDate },
+    {
+      new: true,
+    }
+  );
   return updatedNote;
 };
 const deleteWaterService = async (id, owner) => {

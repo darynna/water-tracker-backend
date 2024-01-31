@@ -438,7 +438,7 @@
         ]
       }
     },
-    "/water/:id": {
+    "/water//update/:id": {
       "put": {
         "tags": ["Water"],
         "summary": "Update portion of water.",
@@ -587,7 +587,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetWaterTodayResponse"}
+                  "$ref": "#/components/schemas/GetWaterTodayResponse"
+                }
               }
             }
           },
@@ -958,65 +959,71 @@
       },
       "GetWaterMonthResponse": {
         "type": "object",
-  "required": ["2024-01-31"],
-  "properties": {
-    "2024-01-31": {
-      "type": "object",
-      "required": ["waterVolumes", "date", "waterVolumeTimes", "waterVolumePercentage", "dailyNorma"],
-      "properties": {
-        "waterVolumes": {
-          "type": "array",
-          "items": {
+        "required": ["2024-01-31"],
+        "properties": {
+          "2024-01-31": {
             "type": "object",
-            "required": ["_id", "waterAmount", "date", "owner"],
+            "required": [
+              "waterVolumes",
+              "date",
+              "waterVolumeTimes",
+              "waterVolumePercentage",
+              "dailyNorma"
+            ],
             "properties": {
-              "_id": {
-                "type": "string",
-                "description": "id",
-                "example": "65ba589cab96c7a17ee3fd"
-              },
-              "waterAmount": {
-                "type": "number",
-                "description": "amount of the water",
-                "example": 200
+              "waterVolumes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["_id", "waterAmount", "date", "owner"],
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "id",
+                      "example": "65ba589cab96c7a17ee3fd"
+                    },
+                    "waterAmount": {
+                      "type": "number",
+                      "description": "amount of the water",
+                      "example": 200
+                    },
+                    "date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "date of creation",
+                      "example": "2024-01-31T12:30:02.593Z"
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "owner of the water response",
+                      "example": "65ba589cab96c7a17ee1ce16"
+                    }
+                  }
+                }
               },
               "date": {
                 "type": "string",
-                "format": "date-time",
-                "description": "date of creation",
-                "example": "2024-01-31T12:30:02.593Z"
+                "description": "formatted date",
+                "example": "31, January"
               },
-              "owner": {
-                "type": "string",
-                "description": "owner of the water response",
-                "example": "65ba589cab96c7a17ee1ce16"
+              "waterVolumeTimes": {
+                "type": "integer",
+                "description": "number of water volume times",
+                "example": 1
+              },
+              "waterVolumePercentage": {
+                "type": "integer",
+                "description": "water volume percentage",
+                "example": 13
+              },
+              "dailyNorma": {
+                "type": "number",
+                "description": "user's water daily norm",
+                "example": 1.5
               }
             }
           }
-        },
-        "date": {
-          "type": "string",
-          "description": "formatted date",
-          "example": "31, January"
-        },
-        "waterVolumeTimes": {
-          "type": "integer",
-          "description": "number of water volume times",
-          "example": 1
-        },
-        "waterVolumePercentage": {
-          "type": "integer",
-          "description": "water volume percentage",
-          "example": 13
-        },
-        "dailyNorma": {
-          "type": "number",
-          "description": "user's water daily norm",
-          "example": 1.5
         }
-      }
-    }
-  }
       }
     }
   },

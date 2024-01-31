@@ -26,7 +26,7 @@ router.post("/", authantication, validateBody(bodyValidation), addWater);
 
 // ?редагувати існуючу нотатку про воду
 router.put(
-  "/:id",
+  "/update/:id",
   authantication,
   isValidId,
   validateBody(bodyValidation),
@@ -34,7 +34,7 @@ router.put(
 );
 
 // !видалити нотатку
-router.delete("/:waterId", authantication, isValidId, deleteById);
+router.delete("/:id", authantication, isValidId, deleteById);
 
 // *ендпоінт для взяття води за поточний день
 router.get(

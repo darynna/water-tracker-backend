@@ -5,10 +5,10 @@ const {
   updateFavoriteValidation,
   authValidation,
   todayDatevalidation,
-  validateInput
+  validateInput,
 } = require("./validation");
 const handleMongooseError = require("./handleMongooseError");
-const { formatDate, formatDay } = require("./formatDate");
+const { formatDate, formatDateForEndpoins } = require("./formatDate");
 
 module.exports = {
   catchAsync,
@@ -19,6 +19,6 @@ module.exports = {
   authValidation,
   handleMongooseError,
   formatDate,
-  formatDay,
-  validateInput
+  formatDateForEndpoins,
+  validateInput,
 };
