@@ -448,14 +448,19 @@
             "in": "header",
             "description": "User's token",
             "required": true,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "format": "ObjectId"
+            }
           }
         ],
         "requestBody": {
           "description": "Update water object",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWaterBody"
+              }
             }
           },
           "required": true
@@ -465,7 +470,9 @@
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateWaterResponse"
+                }
               }
             }
           },
@@ -992,6 +999,50 @@
               }
             }
           }
+        }
+      },
+      "UpdateWaterBody" :{
+      "type": "object",
+      "required": ["waterAmount", "date"],
+      "properties": {
+        "waterAmount": {
+          "type": "number",
+          "description": "amount of the water",
+          "example": 200
+        },
+        "date": {
+          "type": "string",
+          "description": "date",
+          "example": "2:45"
+        }
+      }
+      },
+      "UpdateWaterResponse": {
+        "type": "object",
+        "required": ["_id", "waterAmount", "date", "owner"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "id of water",
+            "example": "65baa7340dd270e42e048eae"
+          },
+          "waterAmount": {
+            "type": "number",
+            "description": "water amount",
+            "example": 300
+          },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "date of creation",
+          "example": "2024-01-31T12:30:02.593Z"
+        },
+        "owner": {
+          "type": "string",
+          "description": "owner of the water response",
+          "example": "23fa589cab96c7a17ee3fd"
+        }
+
         }
       }
     }
