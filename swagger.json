@@ -185,20 +185,20 @@
               }
             }
           },
-            "401": {
-              "description": "Unauthorized - Invalid or empty access token",
-              "content": {
-                "application/json": {
-                  "schema": {"$ref": "#/components/schemas/NotAuthError"}
-                }
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NotAuthError" }
               }
-            },
-            "404": {
-              "description": "User not found",
-              "content": {
-                "application/json": {
-                  "schema": {"$ref": "#/components/schemas/NotFoundError"}
-                }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NotFoundError" }
+              }
             }
           }
         },
@@ -231,22 +231,22 @@
               }
             }
           },
-            "401": {
-              "description": "Unauthorized - Invalid or empty access token",
-              "content": {
-                "application/json": {
-                  "schema": {"$ref": "#/components/schemas/NotAuthError"}
-                }
-              }
-            },
-            "404": {
-              "description": "User not found",
-              "content": {
-                "application/json": {
-                  "schema": {"$ref": "#/components/schemas/NotFoundError"}
-                }
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NotAuthError" }
               }
             }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NotFoundError" }
+              }
+            }
+          }
         },
         "security": [
           {
@@ -277,31 +277,31 @@
               }
             }
           },
-            "401": {
-              "description": "Unauthorized - Invalid or empty access token",
-              "content": {
-                "application/json": {
-                  "schema": {"$ref": "#/components/schemas/NotAuthError"}
-                }
-              }
-            },
-            "400": {
-              "description": "File upload error",
-              "content": {
-                "application/json": {
-                  "schema": {"$ref": "#/components/schemas/NotFoundError"}
-                }
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NotAuthError" }
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "400": {
+            "description": "File upload error",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "User not found"
-                }
+                "schema": { "$ref": "#/components/schemas/NotFoundError" }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "User not found",
+          "content": {
+            "application/json": {
+              "schema": {},
+              "example": {
+                "message": "User not found"
+              }
             }
           }
         },
@@ -349,7 +349,7 @@
             "description": "Daily norma was exceeded",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/NotAuthError"},
+                "schema": { "$ref": "#/components/schemas/NotAuthError" },
                 "example": {
                   "message": "dailyNorma cannot exceed 15"
                 }
@@ -360,7 +360,7 @@
             "description": "User not found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/NotFoundError"},
+                "schema": { "$ref": "#/components/schemas/NotFoundError" },
                 "example": {
                   "message": "User not found"
                 }
@@ -388,12 +388,25 @@
             "schema": {}
           }
         ],
+        "requestBody": {
+          "description": "Add water object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWaterScheme"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/AddWaterSchemeResnonse"
+                }
               }
             }
           },
@@ -401,9 +414,8 @@
             "description": "waterAmount cannot exceed 5000",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "waterAmount cannot exceed 5000"
+                "schema": {
+                  "$ref": "#/components/schemas/ExceedWaterError"
                 }
               }
             }
@@ -412,9 +424,8 @@
             "description": "Unauthorized - Invalid or empty access token",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "Not authorized"
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthError"
                 }
               }
             }
@@ -440,6 +451,15 @@
             "schema": {}
           }
         ],
+        "requestBody": {
+          "description": "Update water object",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Success",
@@ -453,9 +473,8 @@
             "description": "waterAmount cannot exceed 5000",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "waterAmount cannot exceed 5000"
+                "schema": {
+                  "$ref": "#/components/schemas/ExceedWaterError"
                 }
               }
             }
@@ -464,9 +483,8 @@
             "description": "Unauthorized - Invalid or empty access token",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "Not authorized"
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthError"
                 }
               }
             }
@@ -475,9 +493,8 @@
             "description": "User not found",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "User not found"
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
                 }
               }
             }
@@ -508,7 +525,9 @@
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteWaterResponse"
+                }
               }
             }
           },
@@ -516,9 +535,8 @@
             "description": "Unauthorized - Invalid or empty access token",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "Not authorized"
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthError"
                 }
               }
             }
@@ -527,9 +545,8 @@
             "description": "User not found",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "User not found"
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
                 }
               }
             }
@@ -569,7 +586,8 @@
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/GetWaterTodayResponse"}
               }
             }
           },
@@ -577,9 +595,8 @@
             "description": "Unauthorized - Invalid or empty access token",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "Not authorized"
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthError"
                 }
               }
             }
@@ -588,9 +605,8 @@
             "description": "User not found",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "User not found"
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
                 }
               }
             }
@@ -639,7 +655,9 @@
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/GetWaterMonthResponse"
+                }
               }
             }
           },
@@ -647,9 +665,8 @@
             "description": "Unauthorized - Invalid or empty access token",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "Not authorized"
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthError"
                 }
               }
             }
@@ -658,183 +675,356 @@
             "description": "User not found",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "User not found"
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
                 }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationLoginScheme": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "user's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "user's password",
+            "example": "password456"
+          }
+        }
+      },
+      "RegisterResponse": {
+        "type": "object",
+        "required": ["user"],
+        "properties": {
+          "user": {
+            "type": "object",
+            "description": "object with user's email inside",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "user's email",
+                "format": "email"
+              }
+            }
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "required": ["token", "user"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "user's token to login",
+            "example": "eyJhbGciOiJIUzIwI...C-ubT80KJmsHz02M_hixwbaGlZaoe7A"
+          },
+          "user": {
+            "type": "object",
+            "description": "object with user's email inside",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "user's email",
+                "format": "email"
+              }
+            }
+          }
+        }
+      },
+      "RegistrationLoginInvalideErrore": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "There are missing fields"
+          }
+        }
+      },
+      "RegistrationError": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "Email in use"
+          }
+        }
+      },
+      "LoginError": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "Email or password is wrong"
+          }
+        }
+      },
+      "NotAuthError": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "Not authorized"
+          }
+        }
+      },
+      "GetUserResponse": {
+        "type": "object",
+        "required": [
+          "_id",
+          "email",
+          "token",
+          "avatarURL",
+          "name",
+          "gender",
+          "dailyNorma"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "user's id",
+            "example": "23h4589fk20033489d0"
+          },
+          "token": {
+            "type": "string",
+            "description": "user's token to login",
+            "example": "eyJhbGciOiJIUzIwI...C-ubT80KJmsHz02M_hixwbaGlZaoe7A"
+          },
+          "email": {
+            "type": "string",
+            "description": "user's email",
+            "format": "email"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "user's avatar",
+            "example": "//www.gravatar.com/avatar/fe3fb653749dac8899ba73c84ba823b8"
+          },
+          "name": {
+            "type": "string",
+            "description": "user's name",
+            "example": "Ivan"
+          },
+          "gender": {
+            "type": "string",
+            "description": "user's gender",
+            "example": "woman"
+          },
+          "dailyNorma": {
+            "type": "number",
+            "description": "user's water daily norm",
+            "example": "1.5"
+          }
+        }
+      },
+      "NotFoundError": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Not found error",
+            "example": "User not found"
+          }
+        }
+      },
+      "AddWaterScheme": {
+        "type": "object",
+        "required": ["date"],
+        "properties": {
+          "waterAmount": {
+            "type": "number",
+            "description": "amount of the water",
+            "example": 200
+          },
+          "date": {
+            "type": "string",
+            "description": "date",
+            "example": "12:30"
+          }
+        }
+      },
+      "AddWaterSchemeResnonse": {
+        "type": "object",
+        "required": ["waterAmount", "date", "owner", "_id"],
+        "properties": {
+          "waterAmount": {
+            "type": "number",
+            "description": "amount of the water",
+            "example": 200
+          },
+          "date": {
+            "type": "string",
+            "description": "date",
+            "example": "12:30"
+          },
+          "owner": {
+            "type": "string",
+            "description": "owner",
+            "example": "65ba589cab96c7a17ee1cfdf"
+          },
+          "_id": {
+            "type": "string",
+            "description": "id",
+            "example": "34ba589cab96c7a17ee1cfdf"
+          }
+        }
+      },
+      "DeleteWaterResponse": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success",
+            "example": "Water deleted"
+          }
+        }
+      },
+      "ExceedWaterError": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Water can not exceed error",
+            "example": "Water can not exceed 5000"
+          }
+        }
+      },
+      "GetWaterTodayResponse": {
+        "type": "object",
+        "required": ["waterVolumeSum", "waterVolumes", "waterVolumePercentage"],
+        "properties": {
+          "waterVolumeSum": {
+            "type": "number",
+            "description": "Sum of the water",
+            "example": 400
+          },
+          "waterVolumes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["_id", "waterAmount", "date", "owner"],
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "id",
+                  "example": "65ba589cab96c7a17ee3fd"
+                },
+                "waterAmount": {
+                  "type": "number",
+                  "description": "amount of the water",
+                  "example": 350
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "date of creation",
+                  "example": "2024-01-31T12:30:02.593Z"
+                },
+                "owner": {
+                  "type": "string",
+                  "description": "owner of the water response",
+                  "example": "23fa589cab96c7a17ee3fd"
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetWaterMonthResponse": {
+        "type": "object",
+  "required": ["2024-01-31"],
+  "properties": {
+    "2024-01-31": {
+      "type": "object",
+      "required": ["waterVolumes", "date", "waterVolumeTimes", "waterVolumePercentage", "dailyNorma"],
+      "properties": {
+        "waterVolumes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["_id", "waterAmount", "date", "owner"],
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "id",
+                "example": "65ba589cab96c7a17ee3fd"
+              },
+              "waterAmount": {
+                "type": "number",
+                "description": "amount of the water",
+                "example": 200
+              },
+              "date": {
+                "type": "string",
+                "format": "date-time",
+                "description": "date of creation",
+                "example": "2024-01-31T12:30:02.593Z"
+              },
+              "owner": {
+                "type": "string",
+                "description": "owner of the water response",
+                "example": "65ba589cab96c7a17ee1ce16"
+              }
             }
           }
         },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    }
-  }
-},
-  "components": {
-    "schemas":{
-"RegistrationLoginScheme":{
-  "type": "object",
-  "required": ["email", "password"],
-  "properties": {
-    "email": {
-      "type": "string",
-      "description": "user's email",
-      "format": "email"
-    },
-    "password": {
-      "type": "string",
-      "description": "user's password",
-      "example": "password456"
-    }
-  }
-},
-"RegisterResponse": {
-  "type": "object",
-  "required": [ "user"],
-  "properties": {
-  "user": {
-    "type": "object",
-    "description": "object with user's email inside",
-    "properties": {
-      "email": {
-        "type": "string",
-        "description": "user's email",
-        "format": "email"
-      }
-    }
-  }
-  }
-},
-"LoginResponse": {
-  "type": "object",
-  "required": ["token", "user"],
-  "properties": {
-    "token": {
-      "type": "string",
-      "description": "user's token to login",
-      "example": "eyJhbGciOiJIUzIwI...C-ubT80KJmsHz02M_hixwbaGlZaoe7A"
-  },
-  "user": {
-    "type": "object",
-    "description": "object with user's email inside",
-    "properties": {
-      "email": {
-        "type": "string",
-        "description": "user's email",
-        "format": "email"
-      }
-    }
-  }
-  }
-},
-"RegistrationLoginInvalideErrore": {
-  "type": "object",
-  "required": ["message"],
-  "properties": {
-    "message": {
-      "type": "string",
-      "description": "Invalid error",
-      "example": "There are missing fields"
-    }
-  }
-},
-"RegistrationError": {
-  "type": "object",
-  "required": ["message"],
-  "properties": {
-    "message": {
-      "type": "string",
-      "description": "Invalid error",
-      "example": "Email in use"
-    }
-  }
-},
-"LoginError": {
-  "type": "object",
-  "required": ["message"],
-  "properties": {
-    "message": {
-      "type": "string",
-      "description": "Invalid error",
-      "example": "Email or password is wrong"
-    }
-  }
-},
-"NotAuthError": {
-  "type": "object",
-  "required": ["message"],
-  "properties": {
-    "message": {
-      "type": "string",
-      "description": "Invalid error",
-      "example": "Not authorized"
-    }
-  }
-},
-"GetUserResponse": {
-  "type": "object",
-  "required": ["_id", "email", "token", "avatarURL", "name", "gender", "dailyNorma"],
-  "properties": {
-    "_id" : {
-     "type": "string",
-     "description": "user's id",
-     "example": "23h4589fk20033489d0"
-  },
-    "token": {
-      "type": "string",
-      "description": "user's token to login",
-      "example": "eyJhbGciOiJIUzIwI...C-ubT80KJmsHz02M_hixwbaGlZaoe7A"
-  },
-      "email": {
-        "type": "string",
-        "description": "user's email",
-        "format": "email"
-  },
-     "avatarURL": {
-    "type": "string",
-    "description": "user's avatar",
-    "example": "//www.gravatar.com/avatar/fe3fb653749dac8899ba73c84ba823b8"
-    },
-    "name": {
-      "type": "string",
-      "description": "user's name",
-      "example": "Ivan"
-      },
-      "gender": {
-        "type": "string",
-        "description": "user's gender",
-        "example": "woman"
+        "date": {
+          "type": "string",
+          "description": "formatted date",
+          "example": "31, January"
         },
-      "dailyNorma": {
+        "waterVolumeTimes": {
+          "type": "integer",
+          "description": "number of water volume times",
+          "example": 1
+        },
+        "waterVolumePercentage": {
+          "type": "integer",
+          "description": "water volume percentage",
+          "example": 13
+        },
+        "dailyNorma": {
           "type": "number",
           "description": "user's water daily norm",
-          "example": "1.5"
-          }
-  }
-  },
-"NotFoundError": {
-  "type": "object",
-  "required": ["message"],
-  "properties": {
-    "message": {
-      "type": "string",
-      "description": "Not found error",
-      "example": "User not found"
+          "example": 1.5
+        }
+      }
     }
   }
-}  
-}
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
       }
+    }
+  },
+  "securitySchemes": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+    }
   }
 }
-
