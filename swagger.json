@@ -36,7 +36,9 @@
           "description": "Registration's object",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationLoginScheme"
+              }
             }
           },
           "required": true
@@ -46,7 +48,9 @@
             "description": "Created",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterResponse"
+                }
               }
             }
           },
@@ -54,9 +58,8 @@
             "description": "Invalid request body",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "There are missing fields"
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationLoginInvalideErrore"
                 }
               }
             }
@@ -65,9 +68,8 @@
             "description": "Conflict",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "Email in use"
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationError"
                 }
               }
             }
@@ -83,7 +85,9 @@
           "description": "Registration's object",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationLoginScheme"
+              }
             }
           },
           "required": true
@@ -93,7 +97,9 @@
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
               }
             }
           },
@@ -101,9 +107,8 @@
             "description": "Invalid request body",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "There are missing fields"
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationLoginInvalideErrore"
                 }
               }
             }
@@ -112,9 +117,8 @@
             "description": "Email or password is wrong",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "Email or password is wrong"
+                "schema": {
+                  "$ref": "#/components/schemas/LoginError"
                 }
               }
             }
@@ -143,9 +147,8 @@
             "description": "Unauthorized - Invalid or empty access token",
             "content": {
               "application/json": {
-                "schema": {},
-                "example": {
-                  "message": "Not authorized"
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthError"
                 }
               }
             }
@@ -176,17 +179,17 @@
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserResponse"
+                }
               }
-            },
+            }
+          },
             "401": {
               "description": "Unauthorized - Invalid or empty access token",
               "content": {
                 "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "Not authorized"
-                  }
+                  "schema": {"$ref": "#/components/schemas/NotAuthError"}
                 }
               }
             },
@@ -194,12 +197,8 @@
               "description": "User not found",
               "content": {
                 "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "User not found"
-                  }
+                  "schema": {"$ref": "#/components/schemas/NotFoundError"}
                 }
-              }
             }
           }
         },
@@ -230,15 +229,13 @@
               "application/json": {
                 "schema": {}
               }
-            },
+            }
+          },
             "401": {
               "description": "Unauthorized - Invalid or empty access token",
               "content": {
                 "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "Not authorized"
-                  }
+                  "schema": {"$ref": "#/components/schemas/NotAuthError"}
                 }
               }
             },
@@ -246,14 +243,10 @@
               "description": "User not found",
               "content": {
                 "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "User not found"
-                  }
+                  "schema": {"$ref": "#/components/schemas/NotFoundError"}
                 }
               }
             }
-          }
         },
         "security": [
           {
@@ -282,15 +275,13 @@
               "application/json": {
                 "schema": {}
               }
-            },
+            }
+          },
             "401": {
               "description": "Unauthorized - Invalid or empty access token",
               "content": {
                 "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "Not authorized"
-                  }
+                  "schema": {"$ref": "#/components/schemas/NotAuthError"}
                 }
               }
             },
@@ -298,10 +289,7 @@
               "description": "File upload error",
               "content": {
                 "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "File upload error"
-                  }
+                  "schema": {"$ref": "#/components/schemas/NotFoundError"}
                 }
               }
             },
@@ -314,7 +302,6 @@
                     "message": "User not found"
                   }
                 }
-              }
             }
           }
         },
@@ -345,15 +332,13 @@
               "application/json": {
                 "schema": {}
               }
-            },
+            }
+          },
             "401": {
               "description": "Unauthorized - Invalid or empty access token",
               "content": {
                 "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "Not authorized"
-                  }
+                  "schema": {"$ref": "#/components/schemas/NotAuthError"}
                 }
               }
             },
@@ -361,10 +346,7 @@
               "description": "Daily norma was exceeded",
               "content": {
                 "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "dailyNorma cannot exceed 15"
-                  }
+                  "schema": {"$ref": "#/components/schemas/NotFoundError"}
                 }
               }
             },
@@ -377,7 +359,6 @@
                     "message": "User not found"
                   }
                 }
-              }
             }
           }
         },
@@ -390,6 +371,160 @@
     }
   },
   "components": {
+    "schemas":{
+"RegistrationLoginScheme":{
+  "type": "object",
+  "required": ["email", "password"],
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "user's email",
+      "format": "email"
+    },
+    "password": {
+      "type": "string",
+      "description": "user's password",
+      "example": "password456"
+    }
+  }
+},
+"RegisterResponse": {
+  "type": "object",
+  "required": [ "user"],
+  "properties": {
+  "user": {
+    "type": "object",
+    "description": "object with user's email inside",
+    "properties": {
+      "email": {
+        "type": "string",
+        "description": "user's email",
+        "format": "email"
+      }
+    }
+  }
+  }
+},
+"LoginResponse": {
+  "type": "object",
+  "required": ["token", "user"],
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "user's token to login",
+      "example": "eyJhbGciOiJIUzIwI...C-ubT80KJmsHz02M_hixwbaGlZaoe7A"
+  },
+  "user": {
+    "type": "object",
+    "description": "object with user's email inside",
+    "properties": {
+      "email": {
+        "type": "string",
+        "description": "user's email",
+        "format": "email"
+      }
+    }
+  }
+  }
+},
+"RegistrationLoginInvalideErrore": {
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Invalid error",
+      "example": "There are missing fields"
+    }
+  }
+},
+"RegistrationError": {
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Invalid error",
+      "example": "Email in use"
+    }
+  }
+},
+"LoginError": {
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Invalid error",
+      "example": "Email or password is wrong"
+    }
+  }
+},
+"NotAuthError": {
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Invalid error",
+      "example": "Not authorized"
+    }
+  }
+},
+"GetUserResponse": {
+  "type": "object",
+  "required": ["_id", "email", "token", "avatarURL", "name", "gender", "dailyNorma"],
+  "properties": {
+    "_id" : {
+     "type": "string",
+     "description": "user's id",
+     "example": "23h4589fk20033489d0"
+  },
+    "token": {
+      "type": "string",
+      "description": "user's token to login",
+      "example": "eyJhbGciOiJIUzIwI...C-ubT80KJmsHz02M_hixwbaGlZaoe7A"
+  },
+      "email": {
+        "type": "string",
+        "description": "user's email",
+        "format": "email"
+  },
+     "avatarURL": {
+    "type": "string",
+    "description": "user's avatar",
+    "example": "//www.gravatar.com/avatar/fe3fb653749dac8899ba73c84ba823b8"
+    },
+    "name": {
+      "type": "string",
+      "description": "user's name",
+      "example": "Ivan"
+      },
+      "gender": {
+        "type": "string",
+        "description": "user's gender",
+        "example": "woman"
+        },
+      "dailyNorma": {
+          "type": "number",
+          "description": "user's water daily norm",
+          "example": "1.5"
+          }
+  }
+  },
+"NotFoundError": {
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Not found error",
+      "example": "User not found"
+    }
+  }
+}  
+}
+    },
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
@@ -398,4 +533,4 @@
       }
     }
   }
-}
+

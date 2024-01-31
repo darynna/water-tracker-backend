@@ -47,7 +47,7 @@ const loginUser = async (body) => {
 
 const logoutUser = async (user) => {
   const { _id } = user;
-  await User.findByIdAndUpdate(_id, { token: "" });
+  await User.findByIdAndUpdate(_id, { token: null });
 };
 
 const getUserInfo = async (req) => {
