@@ -1,14 +1,16 @@
-## GoIT Node.js Course Template Homework
+## Water Tracker App Backend💙
 
-Please fork this repository to complete your homework assignments (2-6).
-Forking will create a repository on your http://github.com account.
+This is the backend application for [Water Tracker App](https://anastasiyank.github.io/water-tracker-frontend/), a website for tracking water consumption. It provides the necessary server-side functionality to support the frontend application.
 
-## Expalanation Recording to hanle homeworks in the Node.js Block
-[Watch the video](https://www.loom.com/share/007c97d271604e02ae61adbb5b69edd3)
+## Technologies
 
-### Commands:
+- Node.js and Express.js for server-side JavaScript runtime and web framework.
+- MongoDB for the database to store portions of water, user information, and other data.
+- Mongoose as the MongoDB object modeling tool.
+- Swagger UI Express for documenting and visualizing the API using Swagger documentation.
+- Other dependencies such as bcrypt, cloudinary, cors, dotenv, joi, jsonwebtoken, morgan, multer, multer-storage-cloudinary, nanoid, gravatar, and date-fns are used for various functionalities within the backend.
 
-- `npm start` &mdash; starts the server in production mode.
-- `npm run start:dev` &mdash; starts the server in development mode.
-- `npm run lint` &mdash; runs eslint to check the code. Make sure to execute this before each PR and fix all linting errors.
-- `npm lint:fix` &mdash; same as the previous command but fixes simple linting errors automatically.
+## Swagger Documentation
+
+For detailed API documentation, you can visit
+[the Swagger UI documentation](https://water-tracker-backend-0wax.onrender.com/api-docs/) provided by the backend. It provides an interactive interface to explore and test the available API endpoints.

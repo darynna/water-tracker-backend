@@ -292,15 +292,15 @@
                   "schema": {"$ref": "#/components/schemas/NotFoundError"}
                 }
               }
-            },
-            "404": {
-              "description": "User not found",
-              "content": {
-                "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "User not found"
-                  }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "User not found"
                 }
             }
           }
@@ -334,30 +334,333 @@
               }
             }
           },
-            "401": {
-              "description": "Unauthorized - Invalid or empty access token",
-              "content": {
-                "application/json": {
-                  "schema": {"$ref": "#/components/schemas/NotAuthError"}
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "Not authorized"
                 }
               }
-            },
-            "400": {
-              "description": "Daily norma was exceeded",
-              "content": {
-                "application/json": {
-                  "schema": {"$ref": "#/components/schemas/NotFoundError"}
+            }
+          },
+          "400": {
+            "description": "Daily norma was exceeded",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/NotAuthError"},
+                "example": {
+                  "message": "dailyNorma cannot exceed 15"
                 }
               }
-            },
-            "404": {
-              "description": "User not found",
-              "content": {
-                "application/json": {
-                  "schema": {},
-                  "example": {
-                    "message": "User not found"
-                  }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/NotFoundError"},
+                "example": {
+                  "message": "User not found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/water/": {
+      "post": {
+        "tags": ["Water"],
+        "summary": "Add portion of water.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "400": {
+            "description": "waterAmount cannot exceed 5000",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "waterAmount cannot exceed 5000"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/water/:id": {
+      "put": {
+        "tags": ["Water"],
+        "summary": "Update portion of water.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "400": {
+            "description": "waterAmount cannot exceed 5000",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "waterAmount cannot exceed 5000"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "User not found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/water/:waterId": {
+      "delete": {
+        "tags": ["Water"],
+        "summary": "Delete portion of water.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "User not found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/water/today": {
+      "get": {
+        "tags": ["Water"],
+        "summary": "Water consumption during the day.",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Date",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {}
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "User not found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": ["Water"],
+        "summary": "Water consumption during the month.",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "description": "Year",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {}
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "description": "Month",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {}
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "User's token",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or empty access token",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "message": "User not found"
                 }
             }
           }
@@ -370,6 +673,7 @@
       }
     }
   },
+
   "components": {
     "schemas":{
 "RegistrationLoginScheme":{
