@@ -139,10 +139,10 @@ const getWaterConsumptionMonthSummary = async (owner, year, month) => {
   ]);
 
   const resultObject = waterConsumptionArray.reduce((acc, item) => {
+    const portions = item.waterVolumes.length;
     acc[item.date] = {
-      waterVolumes: item.waterVolumes,
       date: formatDate(item.date),
-      waterVolumeTimes: item.waterVolumes.length,
+      portions: portions,
       waterVolumePercentage: item.waterVolumePercentage,
       dailyNorma: dailyNormAmount,
     };

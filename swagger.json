@@ -438,7 +438,7 @@
         ]
       }
     },
-    "/water//update/:id": {
+    "/water/update/:id": {
       "put": {
         "tags": ["Water"],
         "summary": "Update portion of water.",
@@ -880,7 +880,7 @@
           "date": {
             "type": "string",
             "description": "date",
-            "example": "12:30"
+            "example": "2024-01-31T12:30:02.593Z"
           },
           "owner": {
             "type": "string",
@@ -964,49 +964,18 @@
           "2024-01-31": {
             "type": "object",
             "required": [
-              "waterVolumes",
               "date",
-              "waterVolumeTimes",
+              "portions",
               "waterVolumePercentage",
               "dailyNorma"
             ],
             "properties": {
-              "waterVolumes": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "required": ["_id", "waterAmount", "date", "owner"],
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "description": "id",
-                      "example": "65ba589cab96c7a17ee3fd"
-                    },
-                    "waterAmount": {
-                      "type": "number",
-                      "description": "amount of the water",
-                      "example": 200
-                    },
-                    "date": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "date of creation",
-                      "example": "2024-01-31T12:30:02.593Z"
-                    },
-                    "owner": {
-                      "type": "string",
-                      "description": "owner of the water response",
-                      "example": "65ba589cab96c7a17ee1ce16"
-                    }
-                  }
-                }
-              },
               "date": {
                 "type": "string",
                 "description": "formatted date",
                 "example": "31, January"
               },
-              "waterVolumeTimes": {
+              "portions": {
                 "type": "integer",
                 "description": "number of water volume times",
                 "example": 1
