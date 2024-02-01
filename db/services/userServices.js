@@ -50,15 +50,23 @@ const logoutUser = async (user) => {
 
 const getUserInfo = async (req) => {
   const user = await User.findById(req.user.id).select("-password");
-  if (!user) throw httpError(404, "User not found" )
+  if (!user) throw httpError(404, "User not found");
   return user;
 };
 
 const changeUserinfo = async (req, res) => {
-  const { name, email, avatarURL, gender, dailyNorma, currentPassword, newPassword } = req.body;
-  const user = await User.findById(req.user.id)
-  console.log(user)
-  if (!user) throw httpError(404, "User not found" )
+  const {
+    name,
+    email,
+    avatarURL,
+    gender,
+    dailyNorma,
+    currentPassword,
+    newPassword,
+  } = req.body;
+  const user = await User.findById(req.user.id);
+  console.log(user);
+  if (!user) throw httpError(404, "User not found");
 
   const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
 
@@ -83,16 +91,16 @@ const changeUserinfo = async (req, res) => {
 
 const updatedAvatar = async (req, res) => {
   const { _id } = req.user;
-  const avatarURL = req.file.path; 
-  if (!avatarURL) throw httpError(500, "Server problem")
-  
+  const avatarURL = req.file.path;
+  if (!avatarURL) throw httpError(500, "Server problem");
+
   await User.findByIdAndUpdate(_id, { avatarURL });
-  return avatarURL
+  return avatarURL;
 };
 
-const updateDailyNormaService = async (id, dailyNorma) => {
+const updateDailyNormaService = async (_id, dailyNorma) => {
   const updatedUser = await User.findByIdAndUpdate(
-    { _id: id },
+    _id,
     { dailyNorma },
     {
       new: true,

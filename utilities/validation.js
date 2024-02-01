@@ -13,7 +13,7 @@ const bodyValidation = Joi.object({
 const dailyNormaValidation = Joi.object({
   dailyNorma: Joi.number()
     .min(1)
-    .max(15000)
+    .max(15)
     .required()
     .messages({ "any.required": "missing required dailyNorma field" }),
 });
@@ -44,17 +44,13 @@ const validateInput = Joi.object({
 });
 
 const changeUserInfoValidation = Joi.object({
-  name: Joi.string()
-  .min(4),
-  email: Joi.string()
-  .pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/),
+  name: Joi.string().min(4),
+  email: Joi.string().pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/),
   avatarURL: Joi.string(),
-  gender: Joi.string().valid('male', 'female'),
-  dailyNorma: Joi.number()    
-  .min(1)
-  .max(15000),
+  gender: Joi.string().valid("male", "female"),
+  dailyNorma: Joi.number().min(1).max(15),
   currentPassword: Joi.string().min(4),
-  newPassword: Joi.string().min(4).min(4)
+  newPassword: Joi.string().min(4).min(4),
 });
 
 module.exports = {
@@ -63,5 +59,5 @@ module.exports = {
   dailyNormaValidation,
   todayDatevalidation,
   validateInput,
-  changeUserInfoValidation
+  changeUserInfoValidation,
 };
