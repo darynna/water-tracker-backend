@@ -94,7 +94,9 @@ const updatedAvatar = async (req, res) => {
   const avatarURL = req.file.path;
   if (!avatarURL) throw httpError(500, "Server problem");
 
-  await User.findByIdAndUpdate(_id, { avatarURL });
+  await User.findByIdAndUpdate(_id, { avatarURL }, {
+    new: true,
+  });
   return avatarURL;
 };
 
