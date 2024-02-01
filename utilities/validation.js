@@ -1,4 +1,5 @@
 const Joi = require("joi");
+
 const bodyValidation = Joi.object({
   waterAmount: Joi.number()
     .min(1)
@@ -19,7 +20,7 @@ const dailyNormaValidation = Joi.object({
 
 const authValidation = Joi.object({
   email: Joi.string()
-    .min(4)
+    .pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
     .required()
     .messages({ "any.required": "not acceptable data" }),
   password: Joi.string()
@@ -42,10 +43,25 @@ const validateInput = Joi.object({
   month: Joi.number().integer().min(1).max(12).required(),
 });
 
+const changeUserInfoValidation = Joi.object({
+  name: Joi.string()
+  .min(4),
+  email: Joi.string()
+  .pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/),
+  avatarURL: Joi.string(),
+  gender: Joi.string().valid('male', 'female'),
+  dailyNorma: Joi.number()    
+  .min(1)
+  .max(15000),
+  currentPassword: Joi.string().min(4),
+  newPassword: Joi.string().min(4).min(4)
+});
+
 module.exports = {
   bodyValidation,
   authValidation,
   dailyNormaValidation,
   todayDatevalidation,
   validateInput,
+  changeUserInfoValidation
 };

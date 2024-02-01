@@ -3,7 +3,7 @@ const {
   login,
   getCurrent,
   logout,
-  getUserInfo,
+  getUserInformation,
   changeUserinformation,
   updateAvatar,
   updateDailyNorma,
@@ -22,7 +22,7 @@ module.exports = {
   login,
   getCurrent,
   logout,
-  getUserInfo,
+  getUserInformation,
   changeUserinformation,
   updateAvatar,
 

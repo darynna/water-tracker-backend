@@ -18,8 +18,6 @@ const createUser = async (body) => {
     password: hashPassword,
     name,
     avatarURL,
-    gender: "woman",
-    dailyNorma: 1.5,
   });
   return newUser;
 };
@@ -56,12 +54,17 @@ const getUserInfo = async (req) => {
   return user;
 };
 
-const changeUserinformation = async (req, res) => {
-  const { name, email, avatarURL, gender, dailyNorma, newPassword } = req.body;
-  const user = await getUserInfo(req);
-
+const changeUserinfo = async (req, res) => {
+  const { name, email, avatarURL, gender, dailyNorma, currentPassword, newPassword } = req.body;
+  const user = await User.findById(req.user.id)
+  console.log(user)
   if (!user) throw httpError(404, "User not found" )
-  
+
+  const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+
+  if (!isPasswordValid) {
+    throw httpError(401, "Invalid current password");
+  }
 
   user.name = name || user.name;
   user.email = email || user.email;
@@ -78,7 +81,7 @@ const changeUserinformation = async (req, res) => {
   return user;
 };
 
-const updateAvatar = async (req, res) => {
+const updatedAvatar = async (req, res) => {
   const { _id } = req.user;
   const avatarURL = req.file.path; 
   if (!avatarURL) throw httpError(500, "Server problem")
@@ -102,7 +105,7 @@ module.exports = {
   loginUser,
   logoutUser,
   getUserInfo,
-  changeUserinformation,
-  updateAvatar,
+  changeUserinfo,
+  updatedAvatar,
   updateDailyNormaService,
 };

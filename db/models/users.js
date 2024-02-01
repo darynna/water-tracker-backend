@@ -9,8 +9,9 @@ const UserSchema = new Schema(
         },
         email: {
           type: String,
-          required: [true, 'Email is required'],
+          match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
           unique: true,
+          required: [true, 'Email is required'],
         },
         token: {
           type: String,
@@ -18,8 +19,15 @@ const UserSchema = new Schema(
         },
         avatarURL: String,
         name: String,
-        gender: String,
-        dailyNorma: Number,
+        gender: {
+          type: String,
+          enum: ["male", "female"],
+          default: "female",
+        },
+        dailyNorma:{
+          type: Number,
+          default: 1.5,
+        },
       },
       {
         versionKey: false,

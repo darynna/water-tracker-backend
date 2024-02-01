@@ -6,6 +6,7 @@ const {
   authValidation,
   todayDatevalidation,
   validateInput,
+  changeUserInfoValidation
 } = require("./validation");
 const handleMongooseError = require("./handleMongooseError");
 const { formatDate, formatDateForEndpoins } = require("./formatDate");
@@ -21,4 +22,5 @@ module.exports = {
   formatDate,
   formatDateForEndpoins,
   validateInput,
+  changeUserInfoValidation
 };

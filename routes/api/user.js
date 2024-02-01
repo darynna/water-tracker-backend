@@ -3,20 +3,18 @@ const {
   signup,
   login,
   logout,
-  getCurrent,
-  getUserInfo,
+  getUserInformation,
   changeUserinformation,
   updateAvatar,
   updateDailyNorma,
 } = require("../../controllers");
 
-const { authValidation } = require("../../utilities");
+const { authValidation, changeUserInfoValidation, dailyNormaValidation,} = require("../../utilities");
 const {
   validateBody,
   authantication,
   upload
 } = require("../../middleware");
-const { dailyNormaValidation } = require("../../utilities/validation");
 
 const router = express.Router();
 
@@ -24,10 +22,8 @@ router.post("/register", validateBody(authValidation), signup);
 router.post("/login", validateBody(authValidation), login);
 router.post("/logout", authantication, logout);
 
-router.get("/current", authantication, getCurrent);
-
-router.get("/", authantication, getUserInfo);
-router.patch("/update", authantication, changeUserinformation);
+router.get("/", authantication, getUserInformation);
+router.patch("/update", authantication, validateBody(changeUserInfoValidation), changeUserinformation);
 router.patch(
   "/avatar",
   authantication,

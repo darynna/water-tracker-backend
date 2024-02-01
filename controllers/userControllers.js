@@ -3,14 +3,14 @@ const {
   loginUser,
   logoutUser,
   getUserInfo,
-  changeUserinformation,
-  updateAvatar,
+  changeUserinfo,
+  updatedAvatar,
   updateDailyNormaService,
 } = require("../db/services/userServices");
 const { catchAsync } = require("../utilities");
 
 // Authentication
-exports.signup = catchAsync(async (req, res) => {
+const signup = catchAsync(async (req, res) => {
   const newUser = await createUser(req.body);
   res.status(201).json({
     user: {
@@ -19,44 +19,44 @@ exports.signup = catchAsync(async (req, res) => {
   });
 });
 
-exports.login = catchAsync(async (req, res) => {
+const login = catchAsync(async (req, res) => {
   const userUpdated = await loginUser(req.body);
   res.json({
     token: userUpdated.token,
     user: {
       email: userUpdated.email,
-      subscription: userUpdated.subscription,
     },
   });
 });
 
-exports.getCurrent = async (req, res) => {
-  const { email } = req.user;
-  res.json({ email });
-};
+// Think about what to return with this function
+// exports.getCurrent = async (req, res) => {
+//   const { email, avatarURL } = req.user;
+//   res.json({ email, avatarURL });
+// };
 
-exports.logout = catchAsync(async (req, res) => {
+const logout = async (req, res) => {
   await logoutUser(req.user);
   res.status(204).json();
-});
+};
 
 // User
-exports.getUserInfo = catchAsync(async (req, res) => {
+const getUserInformation = async (req, res) => {
   const userInfo = await getUserInfo(req);
   res.status(200).json(userInfo);
-});
+};
 
-exports.changeUserinformation = catchAsync(async (req, res) => {
-  const updatedUser = await changeUserinformation(req, res);
+const changeUserinformation = async (req, res) => {
+  const updatedUser = await changeUserinfo(req, res);
   res.status(200).json(updatedUser);
-});
+};
 
-exports.updateAvatar = catchAsync(async (req, res) => {
-  const avatarURL = await updateAvatar(req, res);
+const updateAvatar = async (req, res) => {
+  const avatarURL = await updatedAvatar(req, res);
   res.status(200).json({ avatarURL });
-});
+};
 
-exports.updateDailyNorma = catchAsync(async (req, res) => {
+const updateDailyNorma = async (req, res) => {
   const { _id } = req.user;
   const { dailyNorma } = req.body;
 
@@ -67,4 +67,15 @@ exports.updateDailyNorma = catchAsync(async (req, res) => {
   const updatedUser = await updateDailyNormaService(_id, dailyNorma);
 
   res.status(200).json(updatedUser);
-});
+};
+
+
+module.exports = {
+  signup: catchAsync(signup),
+  login: catchAsync(login),
+  logout: catchAsync(logout),
+  getUserInformation: catchAsync(getUserInformation),
+  changeUserinformation: catchAsync(changeUserinformation),
+  updateAvatar: catchAsync(updateAvatar),
+  updateDailyNorma: catchAsync(updateDailyNorma),
+};
