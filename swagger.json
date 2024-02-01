@@ -757,12 +757,38 @@
           },
           "user": {
             "type": "object",
+            "required": ["id", "email", "avatarURL", "name", "gender", "dailyNorma"],
             "description": "object with user's email inside",
             "properties": {
+              "_id": {
+                "type": "string",
+                "description": "user's id",
+                "example": "23h4589fk20033489d0"
+              },
               "email": {
                 "type": "string",
                 "description": "user's email",
                 "format": "email"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "user's avatar",
+                "example": "//www.gravatar.com/avatar/fe3fb653749dac8899ba73c84ba823b8"
+              },
+              "name": {
+                "type": "string",
+                "description": "user's name",
+                "example": "Ivan"
+              },
+              "gender": {
+                "type": "string",
+                "description": "user's gender",
+                "example": "woman"
+              },
+              "dailyNorma": {
+                "type": "number",
+                "description": "user's water daily norm",
+                "example": "1.5"
               }
             }
           }

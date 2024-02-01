@@ -20,13 +20,11 @@ const signup = catchAsync(async (req, res) => {
 });
 
 const login = catchAsync(async (req, res) => {
-  const userUpdated = await loginUser(req.body);
+  const {id, email, token, avatarURL, name, gender, dailyNorma} = await loginUser(req.body);
   res.json({
-    token: userUpdated.token,
-    user: {
-      email: userUpdated.email,
-    },
-  });
+    token,
+    user: {id, email, avatarURL, name, gender, dailyNorma}
+  })
 });
 
 const logout = async (req, res) => {
