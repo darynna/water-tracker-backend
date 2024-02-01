@@ -29,12 +29,6 @@ const login = catchAsync(async (req, res) => {
   });
 });
 
-// Think about what to return with this function
-// exports.getCurrent = async (req, res) => {
-//   const { email, avatarURL } = req.user;
-//   res.json({ email, avatarURL });
-// };
-
 const logout = async (req, res) => {
   await logoutUser(req.user);
   res.status(204).json();

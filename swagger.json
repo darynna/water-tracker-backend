@@ -222,12 +222,25 @@
             "schema": {}
           }
         ],
+        "requestBody": {
+          "description": "Registration's object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserBody"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserResponse"
+                }
               }
             }
           },
@@ -920,6 +933,92 @@
             "type": "string",
             "description": "Water can not exceed error",
             "example": "Water can not exceed 5000"
+          }
+        }
+      },
+      "UpdateUserBody": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "John Doe"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "example": "john@example.com"
+            },
+            "avatarURL": {
+              "type": "string",
+              "description": "URL of the user's avatar",
+              "example": "https://example.com/avatar.jpg"
+            },
+            "gender": {
+              "type": "string",
+              "description": "User's gender",
+              "example": "male"
+            },
+            "dailyNorma": {
+              "type": "number",
+              "description": "User's daily water norm",
+              "example": 1.5
+            },
+            "currentPassword": {
+              "type": "string",
+              "description": "User's current password",
+              "example": "current_password"
+            },
+            "newPassword": {
+              "type": "string",
+              "description": "User's new password (if changing)",
+              "example": "new_password"
+            }
+        }
+      },
+      "UpdateUserResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's ID",
+            "example": "65bb8196df087a50cfc042aa"
+          },
+          "password": {
+            "type": "string",
+            "description": "Hashed password",
+            "example": "$2b$10$GALDOKCbUp6OtPEnF/ybd.jpHmeCWSD0EKsD/8Ivmf.ETu25yXOPu"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "daryna@gmail.com"
+          },
+          "token": {
+            "type": "string",
+            "description": "User's authentication token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikc5NjYyOCwiZX...8eZhKg562HE9s_89nDYwU6M3Hw5bu4nvLo"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "URL of the user's avatar",
+            "example": "//www.gravatar.com/avatar/0178bba81b08a44c3a9a9f9edc457beb"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "daryna"
+          },
+          "gender": {
+            "type": "string",
+            "description": "User's gender",
+            "example": "female"
+          },
+          "dailyNorma": {
+            "type": "number",
+            "description": "User's daily water norm",
+            "example": 1000
           }
         }
       },
