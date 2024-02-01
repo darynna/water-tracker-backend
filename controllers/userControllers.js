@@ -60,15 +60,10 @@ const updateDailyNorma = async (req, res) => {
   const { _id } = req.user;
   const { dailyNorma } = req.body;
 
-  if (dailyNorma > 15) {
-    res.status(400).json({ message: "dailyNorma cannot exceed 15" });
-  }
-
   const updatedUser = await updateDailyNormaService(_id, dailyNorma);
 
   res.status(200).json(updatedUser);
 };
-
 
 module.exports = {
   signup: catchAsync(signup),

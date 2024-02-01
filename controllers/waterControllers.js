@@ -9,10 +9,7 @@ const { catchAsync, httpError } = require("../utilities");
 
 const addWater = async (req, res) => {
   const { _id: owner } = req.user;
-  const { waterAmount } = req.body;
-  if (waterAmount > 5000) {
-    res.status(400).json({ message: "waterAmount cannot exceed 5000" });
-  }
+
   const newWaterNote = await addWaterService({ ...req.body, owner });
   res.status(201).json(newWaterNote);
 };
@@ -20,10 +17,6 @@ const addWater = async (req, res) => {
 const updateWater = async (req, res) => {
   const { id } = req.params;
   const { _id: owner } = req.user;
-  const { waterAmount } = req.body;
-  if (waterAmount > 5000) {
-    res.status(400).json({ message: "waterAmount cannot exceed 5000" });
-  }
 
   const updatedWaterById = await updateWaterService(id, owner, req.body);
   if (!updatedWaterById) {
@@ -33,9 +26,9 @@ const updateWater = async (req, res) => {
 };
 
 const deleteById = async (req, res) => {
-  const { waterId } = req.params;
+  const { id } = req.params;
   const { _id: owner } = req.user;
-  const deletedWater = await deleteWaterService(waterId, owner);
+  const deletedWater = await deleteWaterService(id, owner);
   if (!deletedWater) {
     throw httpError(404, "Not found");
   }

@@ -688,13 +688,13 @@
                 }
               }
             }
-          },
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ]
-        }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -1001,21 +1001,21 @@
           }
         }
       },
-      "UpdateWaterBody" :{
-      "type": "object",
-      "required": ["waterAmount", "date"],
-      "properties": {
-        "waterAmount": {
-          "type": "number",
-          "description": "amount of the water",
-          "example": 200
-        },
-        "date": {
-          "type": "string",
-          "description": "date",
-          "example": "2:45"
+      "UpdateWaterBody": {
+        "type": "object",
+        "required": ["waterAmount", "date"],
+        "properties": {
+          "waterAmount": {
+            "type": "number",
+            "description": "amount of the water",
+            "example": 200
+          },
+          "date": {
+            "type": "string",
+            "description": "date",
+            "example": "2:45"
+          }
         }
-      }
       },
       "UpdateWaterResponse": {
         "type": "object",
@@ -1031,27 +1031,26 @@
             "description": "water amount",
             "example": 300
           },
-        "date": {
-          "type": "string",
-          "format": "date-time",
-          "description": "date of creation",
-          "example": "2024-01-31T12:30:02.593Z"
-        },
-        "owner": {
-          "type": "string",
-          "description": "owner of the water response",
-          "example": "23fa589cab96c7a17ee3fd"
-        }
-
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date of creation",
+            "example": "2024-01-31T12:30:02.593Z"
+          },
+          "owner": {
+            "type": "string",
+            "description": "owner of the water response",
+            "example": "23fa589cab96c7a17ee3fd"
+          }
         }
       }
-    }
-  },
-  "securitySchemes": {
-    "bearerAuth": {
-      "type": "http",
-      "scheme": "bearer",
-      "bearerFormat": "JWT"
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
   }
 }

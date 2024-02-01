@@ -1,4 +1,4 @@
-const {httpError} = require('../utilities');
+const { httpError } = require("../utilities");
 
 const validateBody = (schema) => {
   const fun = (req, res, next) => {
