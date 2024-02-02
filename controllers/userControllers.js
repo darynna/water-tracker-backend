@@ -20,11 +20,12 @@ const signup = catchAsync(async (req, res) => {
 });
 
 const login = catchAsync(async (req, res) => {
-  const {id, email, token, avatarURL, name, gender, dailyNorma} = await loginUser(req.body);
+  const { id, email, token, avatarURL, name, gender, dailyNorma } =
+    await loginUser(req.body);
   res.json({
     token,
-    user: {id, email, avatarURL, name, gender, dailyNorma}
-  })
+    user: { id, email, avatarURL, name, gender, dailyNorma },
+  });
 });
 
 const logout = async (req, res) => {
@@ -54,7 +55,7 @@ const updateDailyNorma = async (req, res) => {
 
   const updatedUser = await updateDailyNormaService(_id, dailyNorma);
 
-  res.status(200).json(updatedUser);
+  res.status(200).json({ dailyNorma: updatedUser.dailyNorma });
 };
 
 module.exports = {
