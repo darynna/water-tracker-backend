@@ -130,8 +130,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Logout user.",
-        "parameters": [
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "Success"
@@ -158,8 +157,7 @@
       "get": {
         "tags": ["User info"],
         "summary": "Get user information.",
-        "parameters": [
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Success",
@@ -199,8 +197,7 @@
       "patch": {
         "tags": ["User info"],
         "summary": "Update user information.",
-        "parameters": [
-        ],
+        "parameters": [],
         "requestBody": {
           "description": "Registration's object",
           "content": {
@@ -251,14 +248,23 @@
       "patch": {
         "tags": ["User info"],
         "summary": "Update user avatar.",
-        "parameters": [
-        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "avatar",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AvatarReq"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": { "$ref": "#/components/schemas/AvatarResponse" }
               }
             }
           },
@@ -301,14 +307,22 @@
       "patch": {
         "tags": ["User info"],
         "summary": "Update user daily norma.",
-        "parameters": [
-        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "DaliyNorma's object",
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DailyNormReaponse" }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": { "$ref": "#/components/schemas/DailyNormReaponse" }
               }
             }
           },
@@ -316,7 +330,7 @@
             "description": "Unauthorized - Invalid or empty access token",
             "content": {
               "application/json": {
-                "schema": {},
+                "schema": { "$ref": "#/components/schemas/NotAuthError" },
                 "example": {
                   "message": "Not authorized"
                 }
@@ -357,8 +371,7 @@
       "post": {
         "tags": ["Water"],
         "summary": "Add portion of water.",
-        "parameters": [
-        ],
+        "parameters": [],
         "requestBody": {
           "description": "Add water object",
           "content": {
@@ -409,12 +422,18 @@
         ]
       }
     },
-    "/water/update/:id": {
+    "/water/update/{id}": {
       "put": {
         "tags": ["Water"],
         "summary": "Update portion of water.",
         "parameters": [
-
+          {
+            "in": "path",
+            "name": "id",
+            "required": "true",
+            "type": "string",
+            "description": "Water's id"
+          }
         ],
         "requestBody": {
           "description": "Update water object",
@@ -476,11 +495,18 @@
         ]
       }
     },
-    "/water/:waterId": {
+    "/water/{id}": {
       "delete": {
         "tags": ["Water"],
         "summary": "Delete portion of water.",
         "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": "true",
+            "type": "string",
+            "description": "Water's id"
+          }
         ],
         "responses": {
           "200": {
@@ -685,7 +711,14 @@
           },
           "user": {
             "type": "object",
-            "required": ["id", "email", "avatarURL", "name", "gender", "dailyNorma"],
+            "required": [
+              "id",
+              "email",
+              "avatarURL",
+              "name",
+              "gender",
+              "dailyNorma"
+            ],
             "description": "object with user's email inside",
             "properties": {
               "_id": {
@@ -826,6 +859,36 @@
           }
         }
       },
+      "AvatarReq": {
+        "required": ["avatar"],
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "AvatarResponse": {
+        "type": "object",
+        "properties": {
+          "avatarURL": {
+            "type": "string",
+            "example": "http://res.cloudinary.com/…qkn.jpg"
+          }
+        }
+      },
+      "DailyNormReaponse": {
+        "type": "object",
+        "required": ["dailyNorma"],
+        "properties": {
+          "dailyNorma": {
+            "type": "number",
+            "description": "daily norm of the water",
+            "example": 1.5
+          }
+        }
+      },
       "AddWaterScheme": {
         "type": "object",
         "required": ["date"],
@@ -891,43 +954,43 @@
         }
       },
       "UpdateUserBody": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "User's name",
-              "example": "John Doe"
-            },
-            "email": {
-              "type": "string",
-              "description": "User's email",
-              "example": "john@example.com"
-            },
-            "avatarURL": {
-              "type": "string",
-              "description": "URL of the user's avatar",
-              "example": "https://example.com/avatar.jpg"
-            },
-            "gender": {
-              "type": "string",
-              "description": "User's gender",
-              "example": "male"
-            },
-            "dailyNorma": {
-              "type": "number",
-              "description": "User's daily water norm",
-              "example": 1.5
-            },
-            "currentPassword": {
-              "type": "string",
-              "description": "User's current password",
-              "example": "current_password"
-            },
-            "newPassword": {
-              "type": "string",
-              "description": "User's new password (if changing)",
-              "example": "new_password"
-            }
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": "john@example.com"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "URL of the user's avatar",
+            "example": "https://example.com/avatar.jpg"
+          },
+          "gender": {
+            "type": "string",
+            "description": "User's gender",
+            "example": "male"
+          },
+          "dailyNorma": {
+            "type": "number",
+            "description": "User's daily water norm",
+            "example": 1.5
+          },
+          "currentPassword": {
+            "type": "string",
+            "description": "User's current password",
+            "example": "current_password"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "User's new password (if changing)",
+            "example": "new_password"
+          }
         }
       },
       "UpdateUserResponse": {
