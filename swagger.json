@@ -1001,11 +1001,6 @@
             "description": "User's ID",
             "example": "65bb8196df087a50cfc042aa"
           },
-          "password": {
-            "type": "string",
-            "description": "Hashed password",
-            "example": "$2b$10$GALDOKCbUp6OtPEnF/ybd.jpHmeCWSD0EKsD/8Ivmf.ETu25yXOPu"
-          },
           "email": {
             "type": "string",
             "description": "User's email",

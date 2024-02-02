@@ -65,14 +65,23 @@ const changeUserinfo = async (req, res) => {
     newPassword,
   } = req.body;
   const user = await User.findById(req.user.id);
-  console.log(user);
   if (!user) throw httpError(404, "User not found");
 
-  const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+  if(currentPassword && newPassword){
 
-  if (!isPasswordValid) {
-    throw httpError(401, "Invalid current password");
-  }
+    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+
+    if (!isPasswordValid) {
+      throw httpError(401, "Invalid current password");
+    }
+    if (newPassword) {
+      const hashPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashPassword;
+    }
+  }else if (currentPassword || newPassword) {
+    // If either currentPassword or newPassword is provided without the other, throw an error
+    throw httpError(400, "Both currentPassword and newPassword are required");
+  };
 
   user.name = name || user.name;
   user.email = email || user.email;
@@ -80,13 +89,17 @@ const changeUserinfo = async (req, res) => {
   user.gender = gender || user.gender;
   user.dailyNorma = dailyNorma || user.dailyNorma;
 
-  if (newPassword) {
-    const hashPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashPassword;
-  }
-
   await user.save();
-  return user;
+  const sanitizedUser = {
+    _id: user._id,
+    email: user.email,
+  token: user.token,
+    avatarURL: user.avatarURL,
+    name: user.name,
+    gender: user.gender,
+    dailyNorma: user.dailyNorma,
+  };
+  return sanitizedUser;
 };
 
 const updatedAvatar = async (req, res) => {
