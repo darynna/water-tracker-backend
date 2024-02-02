@@ -47,9 +47,6 @@ exports.googleRedirect = async (req, res) => {
       const token = await googleAuthServer(userData.data);
   
     return res.redirect(`${process.env.BASE_URL}?token=${token}`);
-  // return res.redirect(
-  //   `${process.env.FRONTEND_URL}?email=${userData.data.email}`
-  // );
 };
 
 //   ${process.env.BACKEND_URL}

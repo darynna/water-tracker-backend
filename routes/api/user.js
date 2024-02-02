@@ -7,8 +7,8 @@ const {
   changeUserinformation,
   updateAvatar,
   updateDailyNorma,
-  // googleAuth,
-  // goodleRedirect,
+  googleAuth,
+  googleRedirect,
 } = require("../../controllers");
 
 const {
@@ -41,7 +41,7 @@ router.patch(
   updateDailyNorma
 );
 
-// router.get("/google", googleAuth);
-// router.get("/google-redirect", goodleRedirect);
+router.get("/google", googleAuth);
+router.get("/google-redirect", googleRedirect);
 
 module.exports = router;
