@@ -16,7 +16,10 @@ const {
   getSummary,
   getSummaryMonth,
 } = require("./waterControllers");
-
+const {
+  googleAuth,
+  goodleRedirect,
+} = require("./googleAuthControllers")
 module.exports = {
   signup,
   login,
@@ -32,4 +35,7 @@ module.exports = {
   updateDailyNorma,
   getSummary,
   getSummaryMonth,
+
+  googleAuth,
+  goodleRedirect,
 };
