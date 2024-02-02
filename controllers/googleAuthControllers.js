@@ -1,13 +1,12 @@
 const queryString = require("querystring")
 const axios = require("axios")
-const URL = require("url");
 const {googleAuthServer} = require('../db/services/googleAuthServices')
 
 
 exports.googleAuth = async (req, res) => {
     const stringifiedParams = queryString.stringify({
       client_id: process.env.GOOGLE_CLIENT_ID,
-      redirect_uri: `http://localhost:5001/api/auth/google-redirect`,
+      redirect_uri: `http://localhost:5001/api/user/google-redirect`,
       scope: [
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/userinfo.profile",
@@ -35,7 +34,7 @@ exports.goodleRedirect = async (req, res) => {
       data: new URLSearchParams({
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        redirect_uri: `http://localhost:5001/api/auth/google-redirect`,
+        redirect_uri: `http://localhost:5001/api/user/google-redirect`,
         grant_type: "authorization_code",
         code,
       }),
@@ -51,7 +50,6 @@ exports.goodleRedirect = async (req, res) => {
         Authorization: `Bearer ${tokenData.data.access_token}`,
       },
     });
-    console.log(userData.data)
     const token = await googleAuthServer(userData.data);
   
     return res.redirect(`${process.env.BASE_URL}?token=${token}`);

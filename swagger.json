@@ -131,13 +131,6 @@
         "tags": ["Auth"],
         "summary": "Logout user.",
         "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
-            "schema": {}
-          }
         ],
         "responses": {
           "204": {
@@ -166,13 +159,6 @@
         "tags": ["User info"],
         "summary": "Get user information.",
         "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
-            "schema": {}
-          }
         ],
         "responses": {
           "200": {
@@ -214,13 +200,6 @@
         "tags": ["User info"],
         "summary": "Update user information.",
         "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
-            "schema": {}
-          }
         ],
         "requestBody": {
           "description": "Registration's object",
@@ -273,13 +252,6 @@
         "tags": ["User info"],
         "summary": "Update user avatar.",
         "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
-            "schema": {}
-          }
         ],
         "responses": {
           "200": {
@@ -330,13 +302,6 @@
         "tags": ["User info"],
         "summary": "Update user daily norma.",
         "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
-            "schema": {}
-          }
         ],
         "responses": {
           "200": {
@@ -393,13 +358,6 @@
         "tags": ["Water"],
         "summary": "Add portion of water.",
         "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
-            "schema": {}
-          }
         ],
         "requestBody": {
           "description": "Add water object",
@@ -456,16 +414,7 @@
         "tags": ["Water"],
         "summary": "Update portion of water.",
         "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "ObjectId"
-            }
-          }
+
         ],
         "requestBody": {
           "description": "Update water object",
@@ -532,13 +481,6 @@
         "tags": ["Water"],
         "summary": "Delete portion of water.",
         "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
-            "schema": {}
-          }
         ],
         "responses": {
           "200": {
@@ -591,13 +533,6 @@
             "required": true,
             "style": "form",
             "explode": true,
-            "schema": {}
-          },
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
             "schema": {}
           }
         ],
@@ -661,13 +596,6 @@
             "required": true,
             "style": "form",
             "explode": true,
-            "schema": {}
-          },
-          {
-            "name": "token",
-            "in": "header",
-            "description": "User's token",
-            "required": true,
             "schema": {}
           }
         ],
