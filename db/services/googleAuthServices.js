@@ -34,6 +34,15 @@ exports.googleAuthServer = async (date) => {
       );
 
       return token;
+    }else {
+      const payload = {
+        id: existedUser._id,
+      };
+  
+      const token = jwt.sign(payload, SECRET_WORD, { expiresIn: "24h" });
+      await User.findByIdAndUpdate(existedUser._id, { token });
+  
+      return token;
     }
 
 };
