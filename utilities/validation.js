@@ -44,7 +44,7 @@ const validateInput = Joi.object({
 });
 
 const changeUserInfoValidation = Joi.object({
-  name: Joi.string().min(4),
+  name: Joi.string().min(2),
   email: Joi.string().pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/),
   avatarURL: Joi.string(),
   gender: Joi.string().valid("male", "female"),

@@ -47,4 +47,5 @@ exports.googleRedirect = async (req, res) => {
       const token = await googleAuthServer(userData.data);
   
     return res.redirect(`${process.env.BASE_URL}?token=${token}`);
+    // https://anastasiyank.github.io/water-tracker-frontend?token='token'
 };
