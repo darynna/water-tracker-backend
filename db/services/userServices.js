@@ -4,7 +4,7 @@ const gravatar = require("gravatar");
 const { User } = require("../models/users");
 const { httpError, sendEmail } = require("../../utilities");
 const { nanoid } = require("nanoid");
-const { SECRET_WORD, BASE_URL } = process.env;
+const { SECRET_WORD, BACKEND_URL } = process.env;
 
 const createUser = async (body) => {
   const { email, password } = body;
@@ -26,7 +26,7 @@ const createUser = async (body) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `<a target="_blank" href="${BASE_URL}/user/verify/${verificationToken}">Click to verify your e-mail</a>`,
+    html: `<a target="_blank" href="${BACKEND_URL}/api/user/verify/${verificationToken}">Click to verify your e-mail</a>`,
   };
 
   await sendEmail(verifyEmail);
@@ -55,7 +55,7 @@ const resendVerifyEmailService = async (email) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `<a target="_blank" href="${BASE_URL}/user/verify/${user.verificationToken}">Click to verify your e-mail</a>`,
+    html: `<a target="_blank" href="${BACKEND_URL}/api/user/verify/${user.verificationToken}">Click to verify your e-mail</a>`,
   };
   await sendEmail(verifyEmail);
 };
