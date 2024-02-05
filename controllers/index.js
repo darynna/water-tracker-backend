@@ -7,6 +7,8 @@ const {
   changeUserinformation,
   updateAvatar,
   updateDailyNorma,
+  verifyEmail,
+  resendVerifyEmail,
 } = require("./userControllers");
 
 const {
@@ -16,10 +18,7 @@ const {
   getSummary,
   getSummaryMonth,
 } = require("./waterControllers");
-const {
-  googleAuth,
-  googleRedirect,
-} = require("./googleAuthControllers")
+const { googleAuth, googleRedirect } = require("./googleAuthControllers");
 module.exports = {
   signup,
   login,
@@ -38,4 +37,7 @@ module.exports = {
 
   googleAuth,
   googleRedirect,
+
+  verifyEmail,
+  resendVerifyEmail,
 };

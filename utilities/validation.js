@@ -28,7 +28,9 @@ const authValidation = Joi.object({
     .required()
     .messages({ "any.required": "not acceptable data" }),
 });
-
+const EmailSchema = Joi.object({
+  email: Joi.string().min(6).required(),
+});
 const todayDatevalidation = Joi.object({
   date: Joi.string()
     .regex(/^\d{4}-\d{2}-\d{2}$/)
@@ -60,4 +62,5 @@ module.exports = {
   todayDatevalidation,
   validateInput,
   changeUserInfoValidation,
+  EmailSchema,
 };

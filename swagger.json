@@ -73,6 +73,70 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/verify": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Resent verify email",
+        "parameters": [],
+        "requestBody": {
+          "description": "Resent verify email",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendVerifyEmail"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification email sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResendVerifyEmailResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Verification has already been passed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationErrore"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NotFoundError" }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
           }
         }
       }
@@ -120,6 +184,22 @@
                 "schema": {
                   "$ref": "#/components/schemas/LoginError"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/google": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Google auth.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GoogleAuthResponse" }
               }
             }
           }
@@ -700,6 +780,62 @@
           }
         }
       },
+      "ResendVerifyEmail": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email",
+            "example": "example@example.com"
+          }
+        }
+      },
+      "ResendVerifyEmailResponse": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "Verification email sent"
+          }
+        }
+      },
+      "VerificationErrore": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "Verification has already been passed"
+          }
+        }
+      },
+      "ServerError": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "Server error"
+          }
+        }
+      },
+      "RegistrationLoginInvalideErrore": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "There are missing fields"
+          }
+        }
+      },
       "LoginResponse": {
         "type": "object",
         "required": ["token", "user"],
@@ -755,17 +891,7 @@
           }
         }
       },
-      "RegistrationLoginInvalideErrore": {
-        "type": "object",
-        "required": ["message"],
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "Invalid error",
-            "example": "There are missing fields"
-          }
-        }
-      },
+
       "RegistrationError": {
         "type": "object",
         "required": ["message"],
@@ -796,6 +922,17 @@
             "type": "string",
             "description": "Invalid error",
             "example": "Not authorized"
+          }
+        }
+      },
+      "GoogleAuthResponse": {
+        "type": "object",
+        "required": ["token"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "user's token to login",
+            "example": "eyJhbGciOiJIUzIwI...C-ubT80KJmsHz02M_hixwbaGlZaoe7A"
           }
         }
       },
