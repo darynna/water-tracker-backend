@@ -126,6 +126,22 @@
         }
       }
     },
+    "/user/google": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Google auth.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GoogleAuthResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/logout": {
       "post": {
         "tags": ["Auth"],
@@ -796,6 +812,17 @@
             "type": "string",
             "description": "Invalid error",
             "example": "Not authorized"
+          }
+        }
+      },
+      "GoogleAuthResponse": {
+        "type": "object",
+        "required": ["token"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "user's token to login",
+            "example": "eyJhbGciOiJIUzIwI...C-ubT80KJmsHz02M_hixwbaGlZaoe7A"
           }
         }
       },
