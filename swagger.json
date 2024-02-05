@@ -73,6 +73,63 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/verify": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Resent verify email",
+        "parameters": [],
+        "requestBody": {
+          "description": "Resent verify email",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendVerifyEmail"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification email sent"
+          },
+          "401": {
+            "description": "Verification has already been passed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationErrore"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NotFoundError" }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
           }
         }
       }
@@ -716,6 +773,51 @@
           }
         }
       },
+      "ResendVerifyEmail": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email",
+            "example": "example@example.com"
+          }
+        }
+      },
+      "VerificationErrore": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "Verification has already been passed"
+          }
+        }
+      },
+      "ServerError": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "Server error"
+          }
+        }
+      },
+      "RegistrationLoginInvalideErrore": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Invalid error",
+            "example": "There are missing fields"
+          }
+        }
+      },
       "LoginResponse": {
         "type": "object",
         "required": ["token", "user"],
@@ -771,17 +873,7 @@
           }
         }
       },
-      "RegistrationLoginInvalideErrore": {
-        "type": "object",
-        "required": ["message"],
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "Invalid error",
-            "example": "There are missing fields"
-          }
-        }
-      },
+
       "RegistrationError": {
         "type": "object",
         "required": ["message"],

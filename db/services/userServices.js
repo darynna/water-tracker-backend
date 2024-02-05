@@ -2,8 +2,9 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const gravatar = require("gravatar");
 const { User } = require("../models/users");
-const { httpError } = require("../../utilities");
-const { SECRET_WORD } = process.env;
+const { httpError, sendEmail } = require("../../utilities");
+const { nanoid } = require("nanoid");
+const { SECRET_WORD, BACKEND_URL } = process.env;
 
 const createUser = async (body) => {
   const { email, password } = body;
@@ -13,13 +14,50 @@ const createUser = async (body) => {
   const avatarURL = gravatar.url(email);
   const hashPassword = await bcrypt.hash(password, 10);
   const name = email.split("@")[0];
+  const verificationToken = nanoid();
   const newUser = await User.create({
     ...body,
     password: hashPassword,
     name,
     avatarURL,
+    verificationToken,
   });
+
+  const verifyEmail = {
+    to: email,
+    subject: "Verify email",
+    html: `<a target="_blank" href="${BACKEND_URL}/api/user/verify/${verificationToken}">Click to verify your e-mail</a>`,
+  };
+
+  await sendEmail(verifyEmail);
+
   return newUser;
+};
+
+const verifyEmailService = async (verificationToken) => {
+  const user = await User.findOne({ verificationToken });
+  if (!user) {
+    throw httpError(404, "User not found");
+  }
+  await User.findByIdAndUpdate(user._id, {
+    verify: true,
+    verificationToken: "",
+  });
+};
+const resendVerifyEmailService = async (email) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw httpError(404, "User not found");
+  }
+  if (user.verify) {
+    throw httpError(401, "Verification has already been passed");
+  }
+  const verifyEmail = {
+    to: email,
+    subject: "Verify email",
+    html: `<a target="_blank" href="${BACKEND_URL}/api/user/verify/${user.verificationToken}">Click to verify your e-mail</a>`,
+  };
+  await sendEmail(verifyEmail);
 };
 
 const loginUser = async (body) => {
@@ -30,6 +68,8 @@ const loginUser = async (body) => {
 
   const passwordCompared = await bcrypt.compare(password, user.password);
   if (!passwordCompared) throw httpError(401, "Email or password is wrong");
+
+  if (!user.verify) throw httpError(401, "Your e-mail is not verified");
 
   const payload = {
     id: user._id,
@@ -67,9 +107,11 @@ const changeUserinfo = async (req, res) => {
   const user = await User.findById(req.user.id);
   if (!user) throw httpError(404, "User not found");
 
-  if(currentPassword && newPassword){
-
-    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+  if (currentPassword && newPassword) {
+    const isPasswordValid = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
 
     if (!isPasswordValid) {
       throw httpError(401, "Invalid current password");
@@ -78,10 +120,10 @@ const changeUserinfo = async (req, res) => {
       const hashPassword = await bcrypt.hash(newPassword, 10);
       user.password = hashPassword;
     }
-  }else if (currentPassword || newPassword) {
+  } else if (currentPassword || newPassword) {
     // If either currentPassword or newPassword is provided without the other, throw an error
     throw httpError(400, "Both currentPassword and newPassword are required");
-  };
+  }
 
   user.name = name || user.name;
   user.email = email || user.email;
@@ -93,7 +135,7 @@ const changeUserinfo = async (req, res) => {
   const sanitizedUser = {
     _id: user._id,
     email: user.email,
-  token: user.token,
+    token: user.token,
     avatarURL: user.avatarURL,
     name: user.name,
     gender: user.gender,
@@ -135,4 +177,6 @@ module.exports = {
   changeUserinfo,
   updatedAvatar,
   updateDailyNormaService,
+  verifyEmailService,
+  resendVerifyEmailService,
 };

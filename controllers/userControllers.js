@@ -6,8 +6,12 @@ const {
   changeUserinfo,
   updatedAvatar,
   updateDailyNormaService,
+  verifyEmailService,
+  resendVerifyEmailService,
 } = require("../db/services/userServices");
 const { catchAsync } = require("../utilities");
+
+const { FRONT_END } = process.env;
 
 // Authentication
 const signup = catchAsync(async (req, res) => {
@@ -18,7 +22,17 @@ const signup = catchAsync(async (req, res) => {
     },
   });
 });
+const verifyEmail = async (req, res) => {
+  const { verificationToken } = req.params;
 
+  await verifyEmailService(verificationToken);
+  res.redirect(`${FRONT_END}/signin`);
+};
+const resendVerifyEmail = async (req, res) => {
+  const { email } = req.body;
+  await resendVerifyEmailService(email);
+  res.status(200).json({ message: "Verification email sent" });
+};
 const login = catchAsync(async (req, res) => {
   const { id, email, token, avatarURL, name, gender, dailyNorma } =
     await loginUser(req.body);
@@ -66,4 +80,6 @@ module.exports = {
   changeUserinformation: catchAsync(changeUserinformation),
   updateAvatar: catchAsync(updateAvatar),
   updateDailyNorma: catchAsync(updateDailyNorma),
+  verifyEmail: catchAsync(verifyEmail),
+  resendVerifyEmail: catchAsync(resendVerifyEmail),
 };

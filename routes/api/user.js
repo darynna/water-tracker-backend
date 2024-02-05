@@ -9,18 +9,24 @@ const {
   updateDailyNorma,
   googleAuth,
   googleRedirect,
+  verifyEmail,
+  resendVerifyEmail,
 } = require("../../controllers");
 
 const {
   authValidation,
   changeUserInfoValidation,
   dailyNormaValidation,
+  EmailSchema,
 } = require("../../utilities");
 const { validateBody, authantication, upload } = require("../../middleware");
 
 const router = express.Router();
 
 router.post("/register", validateBody(authValidation), signup);
+router.get("/verify/:verificationToken", verifyEmail);
+router.post("/verify", validateBody(EmailSchema), resendVerifyEmail);
+
 router.post("/login", validateBody(authValidation), login);
 router.post("/logout", authantication, logout);
 
