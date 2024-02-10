@@ -233,6 +233,77 @@
         ]
       }
     },
+    "/user/forgot-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Send email to change password.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPassword"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForgotResponse"
+                }
+              }
+            }
+          },
+
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/change-password": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Change password.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePassword"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "302": {
+            "description": "Redirect to frontend"
+          },
+
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/": {
       "get": {
         "tags": ["User info"],
@@ -798,7 +869,6 @@
         "properties": {
           "message": {
             "type": "string",
-            "description": "Invalid error",
             "example": "Verification email sent"
           }
         }
@@ -891,7 +961,6 @@
           }
         }
       },
-
       "RegistrationError": {
         "type": "object",
         "required": ["message"],
@@ -985,6 +1054,47 @@
           }
         }
       },
+      "ForgotPassword": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email",
+            "example": "example@example.com"
+          }
+        }
+      },
+      "ChangePassword": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email",
+            "example": "example@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "User's password",
+            "example": "password456"
+          }
+        }
+      },
+      "ForgotResponse": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Email sent successfully"
+          }
+        }
+      },
+
       "NotFoundError": {
         "type": "object",
         "required": ["message"],

@@ -9,10 +9,12 @@ const {
   changeUserInfoValidation,
   dailyNormaValidation,
   EmailSchema,
+  resetPasswordSchema,
 } = require("./validation");
 const handleMongooseError = require("./handleMongooseError");
 const { formatDate, formatDateForEndpoins } = require("./formatDate");
 const sendEmail = require("./sendEmail");
+const { verifyEmailMessage, passwordResetMessage } = require("./emailMessages");
 
 module.exports = {
   catchAsync,
@@ -29,4 +31,7 @@ module.exports = {
   dailyNormaValidation,
   sendEmail,
   EmailSchema,
+  verifyEmailMessage,
+  passwordResetMessage,
+  resetPasswordSchema,
 };

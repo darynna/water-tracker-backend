@@ -9,6 +9,8 @@ const {
   updateDailyNorma,
   verifyEmail,
   resendVerifyEmail,
+  forgotPassword,
+  changePassword,
 } = require("./userControllers");
 
 const {
@@ -40,4 +42,7 @@ module.exports = {
 
   verifyEmail,
   resendVerifyEmail,
+
+  forgotPassword,
+  changePassword,
 };

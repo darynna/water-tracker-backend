@@ -2,9 +2,14 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const gravatar = require("gravatar");
 const { User } = require("../models/users");
-const { httpError, sendEmail } = require("../../utilities");
+const {
+  httpError,
+  sendEmail,
+  verifyEmailMessage,
+  passwordResetMessage,
+} = require("../../utilities");
 const { nanoid } = require("nanoid");
-const { SECRET_WORD, BACKEND_URL } = process.env;
+const { SECRET_WORD } = process.env;
 
 const createUser = async (body) => {
   const { email, password } = body;
@@ -23,55 +28,7 @@ const createUser = async (body) => {
     verificationToken,
   });
 
-  const verifyEmail = {
-    to: email,
-    subject: "Verify email",
-    html: `  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h2 {
-            color: #3498db;
-        }
-        p {
-            color: #555;
-        }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Email Confirmation</h2>
-        <p>Thank you for registering. Please click the link below to confirm your email address:</p>
-       <a target="_blank" href="${BACKEND_URL}/api/user/verify/${verificationToken}">Click to verify your e-mail</a>
-    </div>
-</body>
-</html>
-    
-   `,
-  };
-
-  await sendEmail(verifyEmail);
+  await sendEmail(verifyEmailMessage(email, newUser));
 
   return newUser;
 };
@@ -94,54 +51,8 @@ const resendVerifyEmailService = async (email) => {
   if (user.verify) {
     throw httpError(401, "Verification has already been passed");
   }
-  const verifyEmail = {
-    to: email,
-    subject: "Verify email",
-    html: `  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h2 {
-            color: #3498db;
-        }
-        p {
-            color: #555;
-        }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Email Confirmation</h2>
-        <p>Thank you for registering. Please click the link below to confirm your email address:</p>
-       <a target="_blank" href="${BACKEND_URL}/api/user/verify/${user.verificationToken}">Click to verify your e-mail</a>
-    </div>
-</body>
-</html>
-    
-   `,
-  };
-  await sendEmail(verifyEmail);
+
+  await sendEmail(verifyEmailMessage(email, user));
 };
 
 const loginUser = async (body) => {
@@ -170,6 +81,23 @@ const loginUser = async (body) => {
 const logoutUser = async (user) => {
   const { _id } = user;
   await User.findByIdAndUpdate(_id, { token: null });
+};
+
+const forgotPasswordService = async (email) => {
+  const user = await User.findOne({ email });
+  if (!user) throw httpError(401, "Email or password is wrong");
+
+  await sendEmail(passwordResetMessage(email));
+};
+
+const changePasswordService = async (newPassword, email) => {
+  const user = await User.findOne({ email });
+  if (!user) throw httpError(401, "Email or password is wrong");
+
+  const hashPassword = await bcrypt.hash(newPassword, 10);
+
+  user.password = hashPassword;
+  await user.save();
 };
 
 const getUserInfo = async (req) => {
@@ -263,4 +191,6 @@ module.exports = {
   updateDailyNormaService,
   verifyEmailService,
   resendVerifyEmailService,
+  forgotPasswordService,
+  changePasswordService,
 };
