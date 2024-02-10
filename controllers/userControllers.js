@@ -8,20 +8,22 @@ const {
   updateDailyNormaService,
   verifyEmailService,
   resendVerifyEmailService,
+  forgotPasswordService,
+  changePasswordService,
 } = require("../db/services/userServices");
 const { catchAsync } = require("../utilities");
 
 const { FRONT_END } = process.env;
 
 // Authentication
-const signup = catchAsync(async (req, res) => {
+const signup = async (req, res) => {
   const newUser = await createUser(req.body);
   res.status(201).json({
     user: {
       email: newUser.email,
     },
   });
-});
+};
 const verifyEmail = async (req, res) => {
   const { verificationToken } = req.params;
 
@@ -33,18 +35,30 @@ const resendVerifyEmail = async (req, res) => {
   await resendVerifyEmailService(email);
   res.status(200).json({ message: "Verification email sent" });
 };
-const login = catchAsync(async (req, res) => {
+const login = async (req, res) => {
   const { id, email, token, avatarURL, name, gender, dailyNorma } =
     await loginUser(req.body);
   res.json({
     token,
     user: { id, email, avatarURL, name, gender, dailyNorma },
   });
-});
+};
 
 const logout = async (req, res) => {
   await logoutUser(req.user);
   res.status(204).json();
+};
+
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  await forgotPasswordService(email);
+  res.status(200).json({ message: "Email sent successfully" });
+};
+
+const changePassword = async (req, res) => {
+  const { password, email } = req.body;
+  await changePasswordService(password, email);
+  res.redirect(`${FRONT_END}/signin`);
 };
 
 // User
@@ -82,4 +96,6 @@ module.exports = {
   updateDailyNorma: catchAsync(updateDailyNorma),
   verifyEmail: catchAsync(verifyEmail),
   resendVerifyEmail: catchAsync(resendVerifyEmail),
+  forgotPassword: catchAsync(forgotPassword),
+  changePassword: catchAsync(changePassword),
 };

@@ -54,6 +54,10 @@ const changeUserInfoValidation = Joi.object({
   currentPassword: Joi.string().min(4),
   newPassword: Joi.string().min(4).min(4),
 });
+const resetPasswordSchema = Joi.object({
+  email: Joi.string().pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/),
+  password: Joi.string().min(4).min(4),
+});
 
 module.exports = {
   bodyValidation,
@@ -63,4 +67,5 @@ module.exports = {
   validateInput,
   changeUserInfoValidation,
   EmailSchema,
+  resetPasswordSchema,
 };

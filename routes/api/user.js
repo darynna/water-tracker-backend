@@ -11,6 +11,8 @@ const {
   googleRedirect,
   verifyEmail,
   resendVerifyEmail,
+  forgotPassword,
+  changePassword,
 } = require("../../controllers");
 
 const {
@@ -18,6 +20,7 @@ const {
   changeUserInfoValidation,
   dailyNormaValidation,
   EmailSchema,
+  resetPasswordSchema,
 } = require("../../utilities");
 const { validateBody, authantication, upload } = require("../../middleware");
 
@@ -45,6 +48,13 @@ router.patch(
   authantication,
   validateBody(dailyNormaValidation),
   updateDailyNorma
+);
+
+router.post("/forgot-password", validateBody(EmailSchema), forgotPassword);
+router.patch(
+  "/change-password",
+  validateBody(resetPasswordSchema),
+  changePassword
 );
 
 router.get("/google", googleAuth);
