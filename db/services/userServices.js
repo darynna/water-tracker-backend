@@ -13,7 +13,8 @@ const { SECRET_WORD } = process.env;
 
 const createUser = async (body) => {
   const { email, password } = body;
-  const user = await User.findOne({ email });
+  const userEmail = email.toLowerCase();
+  const user = await User.findOne({ userEmail });
   if (user) throw httpError(409, "Email in use");
 
   const avatarURL = gravatar.url(email);
