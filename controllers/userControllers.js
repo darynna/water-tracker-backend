@@ -52,7 +52,10 @@ const logout = async (req, res) => {
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   await forgotPasswordService(email);
-  res.status(200).json({ message: "Email sent successfully" });
+  res.status(200).json({
+    message: "Email sent successfully",
+    userEmail: email,
+  });
 };
 
 const changePassword = async (req, res) => {
