@@ -1086,11 +1086,17 @@
       },
       "ForgotResponse": {
         "type": "object",
-        "required": ["message"],
+        "required": ["message", "userEmail"],
         "properties": {
           "message": {
             "type": "string",
             "example": "Email sent successfully"
+          },
+          "userEmail": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email",
+            "example": "example@example.com"
           }
         }
       },
