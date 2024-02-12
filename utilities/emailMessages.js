@@ -104,7 +104,7 @@ const passwordResetMessage = (email) => {
 
         <p>If this was you, click the link below to complete the password reset process:</p>
 
-        <p><a target="_blank" href="http://localhost:3000/water-tracker-frontend/newpassword">Reset Password</a></p>
+        <p><a target="_blank" href="http://localhost:3000/water-tracker-frontend/newpassword?email=${email}">Reset Password</a></p>
 
         <p>If you did not initiate this request, please ignore this email.</p>
 
