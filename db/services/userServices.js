@@ -14,7 +14,7 @@ const { SECRET_WORD } = process.env;
 const createUser = async (body) => {
   const { email, password } = body;
   const userEmail = email.toLowerCase();
-  const user = await User.findOne({ userEmail });
+  const user = await User.findOne({ email: userEmail });
   if (user) throw httpError(409, "Email in use");
 
   const avatarURL = gravatar.url(email);
@@ -23,6 +23,7 @@ const createUser = async (body) => {
   const verificationToken = nanoid();
   const newUser = await User.create({
     ...body,
+    email: userEmail,
     password: hashPassword,
     name,
     avatarURL,
@@ -44,8 +45,10 @@ const verifyEmailService = async (verificationToken) => {
     verificationToken: "",
   });
 };
+
 const resendVerifyEmailService = async (email) => {
-  const user = await User.findOne({ email });
+  const userEmail = email.toLowerCase();
+  const user = await User.findOne({ email: userEmail });
   if (!user) {
     throw httpError(404, "User not found");
   }
@@ -53,13 +56,14 @@ const resendVerifyEmailService = async (email) => {
     throw httpError(401, "Verification has already been passed");
   }
 
-  await sendEmail(verifyEmailMessage(email, user));
+  await sendEmail(verifyEmailMessage(userEmail, user));
 };
 
 const loginUser = async (body) => {
   const { email, password } = body;
+  const userEmail = email.toLowerCase();
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email: userEmail });
   if (!user) throw httpError(401, "Email or password is wrong");
 
   const passwordCompared = await bcrypt.compare(password, user.password);
@@ -85,14 +89,18 @@ const logoutUser = async (user) => {
 };
 
 const forgotPasswordService = async (email) => {
-  const user = await User.findOne({ email });
+  const userEmail = email.toLowerCase();
+
+  const user = await User.findOne({ email: userEmail });
   if (!user) throw httpError(401, "Email or password is wrong");
 
-  await sendEmail(passwordResetMessage(email));
+  await sendEmail(passwordResetMessage(userEmail));
 };
 
 const changePasswordService = async (newPassword, email) => {
-  const user = await User.findOne({ email });
+  const userEmail = email.toLowerCase();
+
+  const user = await User.findOne({ email: userEmail });
   if (!user) throw httpError(401, "Email or password is wrong");
 
   const hashPassword = await bcrypt.hash(newPassword, 10);
@@ -139,7 +147,7 @@ const changeUserinfo = async (req, res) => {
   }
 
   user.name = name || user.name;
-  user.email = email || user.email;
+  if (email) user.email = email.toLowerCase() || user.email.toLowerCase();
   user.avatarURL = avatarURL || user.avatarURL;
   user.gender = gender || user.gender;
   user.dailyNorma = dailyNorma || user.dailyNorma;

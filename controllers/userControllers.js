@@ -38,9 +38,11 @@ const resendVerifyEmail = async (req, res) => {
 const login = async (req, res) => {
   const { id, email, token, avatarURL, name, gender, dailyNorma } =
     await loginUser(req.body);
+  const userEmail = email.toLowerCase();
+
   res.json({
     token,
-    user: { id, email, avatarURL, name, gender, dailyNorma },
+    user: { id, email: userEmail, avatarURL, name, gender, dailyNorma },
   });
 };
 
@@ -54,7 +56,6 @@ const forgotPassword = async (req, res) => {
   await forgotPasswordService(email);
   res.status(200).json({
     message: "Email sent successfully",
-    userEmail: email,
   });
 };
 
