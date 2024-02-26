@@ -62,7 +62,9 @@ const forgotPassword = async (req, res) => {
 const changePassword = async (req, res) => {
   const { password, email } = req.body;
   await changePasswordService(password, email);
-  res.redirect(`${FRONT_END}/signin`);
+  res.status(200).json({
+    message: "Password changed successfully",
+  });
 };
 
 // User

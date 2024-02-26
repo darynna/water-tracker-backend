@@ -287,10 +287,16 @@
           "required": true
         },
         "responses": {
-          "302": {
-            "description": "Redirect to frontend"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponse"
+                }
+              }
+            }
           },
-
           "401": {
             "description": "Email or password is wrong",
             "content": {
@@ -1100,7 +1106,16 @@
           }
         }
       },
-
+      "ChangePasswordResponse": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Password changed successfully"
+          }
+        }
+      },
       "NotFoundError": {
         "type": "object",
         "required": ["message"],
